@@ -1,0 +1,167 @@
+.flashcard {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.flashcard-content {
+  padding: 2rem;
+}
+
+.flashcard-image {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.flashcard-image img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: filter 0.3s;
+}
+
+.flashcard-image img.blur {
+  filter: blur(10px);
+}
+
+.flashcard-question {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  min-height: 80px;
+}
+
+.flashcard-question h2 {
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+  font-size: 1.75rem;
+}
+
+.scientific-name {
+  color: #7f8c8d;
+  font-style: italic;
+  margin: 0;
+}
+
+.flashcard-controls {
+  margin-bottom: 1rem;
+}
+
+.audio-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.audio-button {
+  flex: 1;
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-weight: 600;
+}
+
+.audio-button:hover {
+  background: #2980b9;
+}
+
+.audio-button:active {
+  transform: scale(0.98);
+}
+
+.audio-button.replay {
+  background: #16a085;
+}
+
+.audio-button.replay:hover {
+  background: #138d75;
+}
+
+.reveal-button {
+  width: 100%;
+  background: #2ecc71;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-weight: 600;
+}
+
+.reveal-button:hover {
+  background: #27ae60;
+}
+
+.reveal-button:active {
+  transform: scale(0.98);
+}
+
+.attribution-section {
+  margin-top: 1.5rem;
+  border-top: 1px solid #ecf0f1;
+  padding-top: 1rem;
+}
+
+.attribution-toggle {
+  background: transparent;
+  border: none;
+  color: #7f8c8d;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  width: 100%;
+  text-align: left;
+  transition: color 0.3s;
+}
+
+.attribution-toggle:hover {
+  color: #34495e;
+}
+
+.attribution-details {
+  margin-top: 0.75rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #2c3e50;
+}
+
+.attribution-item {
+  margin-bottom: 0.75rem;
+}
+
+.attribution-item:last-child {
+  margin-bottom: 0;
+}
+
+.attribution-item a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.attribution-item a:hover {
+  text-decoration: underline;
+}
+
+.attribution-item.source-info {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e0e0e0;
+  color: #7f8c8d;
+}
+
+.attribution-item strong {
+  color: #34495e;
+}
