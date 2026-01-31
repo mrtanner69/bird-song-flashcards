@@ -1,0 +1,56 @@
+[
+  {
+    "id": "amecro",
+    "commonName": "American Crow",
+    "scientificName": "Corvus brachyrhynchos",
+    "speciesCode": "amecro",
+    "audioUrl": "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/202984741/mp3",
+    "imageUrl": "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/303990801/1800",
+    "audioAttribution": "Paul Marvin",
+    "imageAttribution": "Jay McGowan",
+    "license": "CC BY-NC-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "source": {
+      "audio": "other",
+      "image": "other",
+      "audioSourceUrl": "https://macaulaylibrary.org/asset/202984741",
+      "imageSourceUrl": "https://macaulaylibrary.org/asset/303990801"
+    }
+  },
+  {
+    "id": "norcar",
+    "commonName": "Northern Cardinal",
+    "scientificName": "Cardinalis cardinalis",
+    "speciesCode": "norcar",
+    "audioUrl": "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/243815161/mp3",
+    "imageUrl": "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/303642071/1800",
+    "audioAttribution": "Paul Marvin",
+    "imageAttribution": "Ian Davies",
+    "license": "CC BY-NC-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "source": {
+      "audio": "other",
+      "image": "other",
+      "audioSourceUrl": "https://macaulaylibrary.org/asset/243815161",
+      "imageSourceUrl": "https://macaulaylibrary.org/asset/303642071"
+    }
+  },
+  {
+    "id": "baleag",
+    "commonName": "Bald Eagle",
+    "scientificName": "Haliaeetus leucocephalus",
+    "speciesCode": "baleag",
+    "audioUrl": "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/255449781/mp3",
+    "imageUrl": "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/303387351/1800",
+    "audioAttribution": "Paul Marvin",
+    "imageAttribution": "Ian Davies",
+    "license": "CC BY-NC-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "source": {
+      "audio": "other",
+      "image": "other",
+      "audioSourceUrl": "https://macaulaylibrary.org/asset/255449781",
+      "imageSourceUrl": "https://macaulaylibrary.org/asset/303387351"
+    }
+  }
+]
