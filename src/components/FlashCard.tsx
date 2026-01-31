@@ -11,6 +11,7 @@ export const FlashCard: React.FC<FlashCardProps> = ({ card, mode }) => {
   const [isRevealed, setIsRevealed] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showAttribution, setShowAttribution] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const handlePlayPause = () => {
@@ -36,6 +37,17 @@ export const FlashCard: React.FC<FlashCardProps> = ({ card, mode }) => {
     setIsPlaying(false);
   };
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
+  const getImageSrc = () => {
+    if (imageError) {
+      return '/images/placeholder.jpg';
+    }
+    return `/images/${card.id}.jpg`;
+  };
+
   const renderAudioFirst = () => (
     <>
       <div className="flashcard-question">
@@ -52,9 +64,13 @@ export const FlashCard: React.FC<FlashCardProps> = ({ card, mode }) => {
         )}
       </div>
 
-      {isRevealed && card.imageUrl && (
+      {isRevealed && (
         <div className="flashcard-image">
-          <img src={card.imageUrl} alt={card.commonName} />
+          <img 
+            src={getImageSrc()} 
+            alt={card.commonName}
+            onError={handleImageError}
+          />
         </div>
       )}
     </>
@@ -62,15 +78,14 @@ export const FlashCard: React.FC<FlashCardProps> = ({ card, mode }) => {
 
   const renderImageFirst = () => (
     <>
-      {card.imageUrl && (
-        <div className="flashcard-image">
-          <img 
-            src={card.imageUrl} 
-            alt={isRevealed ? card.commonName : 'Bird'} 
-            className={!isRevealed ? 'blur' : ''}
-          />
-        </div>
-      )}
+      <div className="flashcard-image">
+        <img 
+          src={getImageSrc()}
+          alt={isRevealed ? card.commonName : 'Bird'} 
+          className=""
+          onError={handleImageError}
+        />
+      </div>
       
       <div className="flashcard-question">
         {isRevealed ? (

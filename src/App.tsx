@@ -1,35 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useMemo, useState } from "react";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+import { birds } from "./data/birds";
+import { FlashCard } from "./components/FlashCard";
+
+type Mode = "audio-first" | "image-first";
+
+export default function App() {
+  const [index, setIndex] = useState(0);
+  const [mode, setMode] = useState<Mode>("audio-first");
+
+  const cards = useMemo(() => birds, []);
+
+  const current = cards[index];
+
+  const handleNext = () => setIndex((i) => (i + 1) % cards.length);
+  const handlePrevious = () =>
+    setIndex((i) => (i - 1 + cards.length) % cards.length);
+
+  const handleShuffle = () => {
+    if (cards.length <= 1) return;
+    let next = index;
+    while (next === index) next = Math.floor(Math.random() * cards.length);
+    setIndex(next);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="app">
+      <div className="top-bar">
+        <h1 className="app-title">Prescott Preserve Bird Flashcards</h1>
 
-export default App
+
+        <div className="mode-toggle">
+          <label>
+            Mode:&nbsp;
+            <select
+              value={mode}
+              onChange={(e) => setMode(e.target.value as Mode)}
+            >
+              <option value="audio-first">Audio first</option>
+              <option value="image-first">Image first</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div className="card-area">
+        <FlashCard key={current.id} card={current} mode={mode} />
+      </div>
+
+      <div className="navigation">
+        <button className="nav-button" onClick={handlePrevious}>
+          ← Previous
+        </button>
+
+        <button className="nav-button shuffle" onClick={handleShuffle}>
+          Shuffle
+        </button>
+
+        <button className="nav-button" onClick={handleNext}>
+          Next →
+        </button>
+      </div>
+
+      <footer className="app-footer">
+        <p>
+          Audio from Xeno-canto and images from Wikimedia. Check licenses in
+          attribution.
+        </p>
+      </footer>
+    </div>
+  );
+}
