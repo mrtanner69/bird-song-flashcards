@@ -184,6 +184,53 @@
   background: #d5dbdb;
 }
 
+/* Navigation Styles */
+.navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.deck-progress {
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.nav-button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 1rem 3rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  min-width: 200px;
+}
+
+.nav-button:hover {
+  background: #2980b9;
+}
+
+.nav-button:active {
+  transform: scale(0.98);
+}
+
+.nav-button.primary {
+  background: #2ecc71;
+}
+
+.nav-button.primary:hover {
+  background: #27ae60;
+}
+
 /* Mobile responsiveness for score header */
 @media (max-width: 480px) {
   .score-header {
@@ -209,5 +256,16 @@
 
   .reset-button {
     width: 100%;
+  }
+
+  .navigation {
+    margin-top: 1rem;
+  }
+
+  .nav-button {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.85rem 2rem;
+    font-size: 1rem;
   }
 }

@@ -1,17 +1,18 @@
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import "./App.css";
 
 import { birds } from "./data/birds";
 import { FlashCard } from "./components/FlashCard";
+import { DeckComplete } from "./components/DeckComplete";
 import { useScoring, type Mode } from "./hooks/useScoring";
 
 export default function App() {
-  const [index, setIndex] = useState(0);
   const [mode, setMode] = useState<Mode>("audio-first");
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [showDeckComplete, setShowDeckComplete] = useState(false);
 
   const cards = useMemo(() => birds, []);
-  const current = cards[index];
+  const cardIds = useMemo(() => birds.map((b) => b.id), []);
 
   const {
     getCurrentScore,
@@ -22,30 +23,64 @@ export default function App() {
     resetCurrentScore,
     resetAllScores,
     HIGH_SCORE_THRESHOLD,
+    // Deck management
+    initializeDeck,
+    advanceDeck,
+    isDeckComplete,
+    getCurrentCardId,
+    getDeckProgress,
+    reshuffleDeck,
+    switchMode,
   } = useScoring();
+
+  // Initialize deck on mount and when mode changes
+  useEffect(() => {
+    initializeDeck(cardIds, mode);
+  }, [initializeDeck, cardIds, mode]);
+
+  // Get current card from deck
+  const currentCardId = getCurrentCardId();
+  const current = useMemo(() => {
+    if (!currentCardId) return cards[0];
+    return cards.find((c) => c.id === currentCardId) || cards[0];
+  }, [currentCardId, cards]);
 
   const currentScore = getCurrentScore(mode);
   const audioHighScore = getHighScore("audio-first");
   const imageHighScore = getHighScore("image-first");
   const cardAnswered = isCardAnswered(mode, current.id);
   const cardAnswer = getCardAnswer(mode, current.id);
+  const deckProgress = getDeckProgress();
+  const deckIsComplete = isDeckComplete();
 
-  const handleNext = () => setIndex((i) => (i + 1) % cards.length);
-  const handlePrevious = () =>
-    setIndex((i) => (i - 1 + cards.length) % cards.length);
-
-  const handleShuffle = () => {
-    if (cards.length <= 1) return;
-    let next = index;
-    while (next === index) next = Math.floor(Math.random() * cards.length);
-    setIndex(next);
-  };
+  const handleNext = useCallback(() => {
+    // Check if deck is complete after this card
+    if (deckIsComplete) {
+      setShowDeckComplete(true);
+    } else {
+      advanceDeck();
+    }
+  }, [advanceDeck, deckIsComplete]);
 
   const handleAnswer = useCallback(
     (isCorrect: boolean) => {
       recordAnswer(mode, current.id, isCorrect);
     },
     [mode, current.id, recordAnswer]
+  );
+
+  const handleReshuffle = useCallback(() => {
+    reshuffleDeck(cardIds, mode);
+    setShowDeckComplete(false);
+  }, [reshuffleDeck, cardIds, mode]);
+
+  const handleModeChange = useCallback(
+    (newMode: Mode) => {
+      setMode(newMode);
+      switchMode(cardIds, newMode);
+      setShowDeckComplete(false);
+    },
+    [switchMode, cardIds]
   );
 
   const handleResetCurrent = () => {
@@ -76,7 +111,7 @@ export default function App() {
             Mode:&nbsp;
             <select
               value={mode}
-              onChange={(e) => setMode(e.target.value as Mode)}
+              onChange={(e) => handleModeChange(e.target.value as Mode)}
             >
               <option value="audio-first">Audio first</option>
               <option value="image-first">Image first</option>
@@ -150,29 +185,37 @@ export default function App() {
       </div>
 
       <div className="card-area">
-        <FlashCard
-          key={current.id}
-          card={current}
-          mode={mode}
-          isAnswered={cardAnswered}
-          currentAnswer={cardAnswer}
-          onAnswer={handleAnswer}
-        />
+        {showDeckComplete ? (
+          <DeckComplete
+            mode={mode}
+            currentScore={currentScore}
+            highScore={mode === "audio-first" ? audioHighScore : imageHighScore}
+            highScoreThreshold={HIGH_SCORE_THRESHOLD}
+            onReshuffle={handleReshuffle}
+          />
+        ) : (
+          <FlashCard
+            key={current.id}
+            card={current}
+            mode={mode}
+            isAnswered={cardAnswered}
+            currentAnswer={cardAnswer}
+            onAnswer={handleAnswer}
+          />
+        )}
       </div>
 
-      <div className="navigation">
-        <button className="nav-button" onClick={handlePrevious}>
-          ← Previous
-        </button>
+      {!showDeckComplete && (
+        <div className="navigation">
+          <div className="deck-progress">
+            Card {deckProgress.current} of {deckProgress.total}
+          </div>
 
-        <button className="nav-button shuffle" onClick={handleShuffle}>
-          Shuffle
-        </button>
-
-        <button className="nav-button" onClick={handleNext}>
-          Next →
-        </button>
-      </div>
+          <button className="nav-button primary" onClick={handleNext}>
+            {deckIsComplete ? "Finish Deck" : "Next"}
+          </button>
+        </div>
+      )}
 
       <footer className="app-footer">
         <p>

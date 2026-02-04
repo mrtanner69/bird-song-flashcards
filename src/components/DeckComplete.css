@@ -1,0 +1,169 @@
+.deck-complete {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.deck-complete-content {
+  padding: 2rem;
+  text-align: center;
+}
+
+.deck-complete-header {
+  margin-bottom: 1.5rem;
+}
+
+.deck-complete-header h2 {
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+  font-size: 2rem;
+}
+
+.deck-complete-header .mode-label {
+  color: #7f8c8d;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.score-summary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: white;
+}
+
+.main-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.score-fraction {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.score-percentage {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.streak-info {
+  margin-top: 1rem;
+}
+
+.streak-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.high-score-section {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.high-score-section h3 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.achievement {
+  background: #f39c12;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 1rem;
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+.high-score-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.high-score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 8px;
+}
+
+.high-score-item .label {
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.high-score-item .value {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.high-score-note {
+  margin: 1rem 0 0 0;
+  font-size: 0.85rem;
+  color: #95a5a6;
+}
+
+.reshuffle-button {
+  width: 100%;
+  background: #2ecc71;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.reshuffle-button:hover {
+  background: #27ae60;
+}
+
+.reshuffle-button:active {
+  transform: scale(0.98);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .deck-complete-content {
+    padding: 1.5rem;
+  }
+
+  .deck-complete-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .score-percentage {
+    font-size: 2.5rem;
+  }
+
+  .score-fraction {
+    font-size: 1.5rem;
+  }
+}
