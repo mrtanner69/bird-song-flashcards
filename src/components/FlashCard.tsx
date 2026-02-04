@@ -110,15 +110,15 @@ export const FlashCard: React.FC<FlashCardProps> = ({ card, mode }) => {
 
         <div className="flashcard-controls">
           <div className="audio-controls">
-            <button 
+            <button
               className="audio-button"
               onClick={handlePlayPause}
               aria-label={isPlaying ? 'Pause' : 'Play'}
             >
               {isPlaying ? '⏸️ Pause' : '▶️ Play Song'}
             </button>
-            
-            <button 
+
+            <button
               className="audio-button replay"
               onClick={handleReplay}
               aria-label="Replay"
@@ -126,12 +126,15 @@ export const FlashCard: React.FC<FlashCardProps> = ({ card, mode }) => {
               🔁 Replay
             </button>
           </div>
-          
+
           <audio
             ref={audioRef}
-            src={card.audioUrl}
             onEnded={handleAudioEnded}
-          />
+            preload="auto"
+          >
+            <source src={`/audio/birdsong/${card.id}.mp3`} type="audio/mpeg" />
+            <source src={`/audio/birdsong/${card.id}.wav`} type="audio/wav" />
+          </audio>
         </div>
 
         {!isRevealed && (
