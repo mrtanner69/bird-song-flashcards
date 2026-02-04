@@ -1,9 +1,8 @@
 export interface BirdCard {
-  id: string;
+  id: string; // 6-letter eBird species code, used as filename for audio/images
   commonName: string;
   scientificName: string;
   speciesCode: string; // eBird species code
-  audioUrl: string; // direct playable URL (mp3/ogg)
   imageUrl: string; // direct usable image URL
   audioAttribution: string; // human-readable credit
   imageAttribution: string;

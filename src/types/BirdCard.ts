@@ -4,7 +4,6 @@ export type BirdCard = {
   scientificName: string;
   speciesCode: string;
 
-  audioUrl: string;
   imageUrl: string;
 
   audioAttribution: string;
