@@ -211,9 +211,11 @@ export default function App() {
             Card {deckProgress.current} of {deckProgress.total}
           </div>
 
-          <button className="nav-button primary" onClick={handleNext}>
-            {deckIsComplete ? "Finish Deck" : "Next"}
-          </button>
+          {cardAnswered && (
+            <button className="nav-button primary" onClick={handleNext}>
+              {deckIsComplete ? "Finish Deck" : "Next"}
+            </button>
+          )}
         </div>
       )}
 
