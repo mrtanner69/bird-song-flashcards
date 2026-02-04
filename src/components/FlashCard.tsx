@@ -21,7 +21,6 @@ export const FlashCard: React.FC<FlashCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [showAttribution, setShowAttribution] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const [showChangeAnswer, setShowChangeAnswer] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const handlePlayPause = () => {
@@ -158,43 +157,25 @@ export const FlashCard: React.FC<FlashCardProps> = ({
 
         {isRevealed && (
           <div className="scoring-section">
-            {!isAnswered || showChangeAnswer ? (
-              <>
-                <p className="scoring-prompt">Did you get it correct?</p>
-                <div className="scoring-buttons">
-                  <button
-                    className="score-button correct"
-                    onClick={() => {
-                      onAnswer(true);
-                      setShowChangeAnswer(false);
-                    }}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    className="score-button incorrect"
-                    onClick={() => {
-                      onAnswer(false);
-                      setShowChangeAnswer(false);
-                    }}
-                  >
-                    No
-                  </button>
-                </div>
-              </>
-            ) : (
-              <div className="answer-recorded">
-                <span className={`answer-status ${currentAnswer}`}>
-                  {currentAnswer === 'correct' ? 'Marked correct' : 'Marked incorrect'}
-                </span>
-                <button
-                  className="change-answer-button"
-                  onClick={() => setShowChangeAnswer(true)}
-                >
-                  Change answer
-                </button>
-              </div>
-            )}
+            <p className="scoring-prompt">Did you get it correct?</p>
+            <div className="scoring-buttons">
+              <button
+                className={`score-button correct ${isAnswered && currentAnswer === 'correct' ? 'selected' : ''} ${isAnswered && currentAnswer !== 'correct' ? 'locked' : ''}`}
+                onClick={() => !isAnswered && onAnswer(true)}
+                disabled={isAnswered && currentAnswer !== 'correct'}
+                aria-disabled={isAnswered && currentAnswer !== 'correct'}
+              >
+                Yes
+              </button>
+              <button
+                className={`score-button incorrect ${isAnswered && currentAnswer === 'incorrect' ? 'selected' : ''} ${isAnswered && currentAnswer !== 'incorrect' ? 'locked' : ''}`}
+                onClick={() => !isAnswered && onAnswer(false)}
+                disabled={isAnswered && currentAnswer !== 'incorrect'}
+                aria-disabled={isAnswered && currentAnswer !== 'incorrect'}
+              >
+                No
+              </button>
+            </div>
           </div>
         )}
 

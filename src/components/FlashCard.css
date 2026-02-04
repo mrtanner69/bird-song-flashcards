@@ -223,44 +223,31 @@
   background: #c0392b;
 }
 
-.score-button:active {
+.score-button:active:not(:disabled) {
   transform: scale(0.98);
 }
 
-.answer-recorded {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+/* Selected button state - the answer the user chose */
+.score-button.selected {
+  cursor: default;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
 }
 
-.answer-status {
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.95rem;
+.score-button.correct.selected {
+  background: #27ae60;
 }
 
-.answer-status.correct {
-  background: #d5f5e3;
-  color: #1e8449;
+.score-button.incorrect.selected {
+  background: #c0392b;
 }
 
-.answer-status.incorrect {
-  background: #fadbd8;
-  color: #c0392b;
+/* Locked button state - the answer the user did NOT choose */
+.score-button.locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
-.change-answer-button {
-  background: transparent;
-  border: none;
-  color: #7f8c8d;
-  font-size: 0.85rem;
-  cursor: pointer;
-  text-decoration: underline;
-  padding: 0.25rem;
-}
-
-.change-answer-button:hover {
-  color: #34495e;
+.score-button.locked:hover {
+  transform: none;
 }
