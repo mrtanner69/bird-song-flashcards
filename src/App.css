@@ -40,3 +40,174 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Score Header Styles */
+.score-header {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.score-display {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.current-score {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.current-score .score-label {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.current-score .score-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #3498db;
+}
+
+.current-score .score-percent {
+  margin-left: 0.25rem;
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.current-score .streak {
+  background: #f39c12;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.high-scores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.high-score {
+  flex: 1;
+  min-width: 140px;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.high-score.active {
+  background: #e8f4fd;
+  border: 1px solid #3498db;
+}
+
+.high-score .score-label {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.high-score .score-value {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.95rem;
+}
+
+.high-score .best-streak {
+  font-size: 0.75rem;
+  color: #f39c12;
+  font-weight: 500;
+}
+
+.score-info {
+  text-align: center;
+  margin-top: 0.5rem;
+  color: #95a5a6;
+  font-size: 0.75rem;
+}
+
+.score-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  justify-content: center;
+}
+
+.reset-button {
+  background: #ecf0f1;
+  color: #7f8c8d;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reset-button:hover {
+  background: #bdc3c7;
+  color: #2c3e50;
+}
+
+.reset-button.danger {
+  background: #fadbd8;
+  color: #c0392b;
+}
+
+.reset-button.danger:hover {
+  background: #f1948a;
+  color: white;
+}
+
+.reset-button.danger.confirm {
+  background: #e74c3c;
+  color: white;
+}
+
+.reset-button.cancel {
+  background: #d5dbdb;
+}
+
+/* Mobile responsiveness for score header */
+@media (max-width: 480px) {
+  .score-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .current-score .score-value {
+    font-size: 1rem;
+  }
+
+  .high-scores {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .high-score {
+    min-width: auto;
+  }
+
+  .score-controls {
+    flex-direction: column;
+  }
+
+  .reset-button {
+    width: 100%;
+  }
+}

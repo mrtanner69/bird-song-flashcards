@@ -5,13 +5,23 @@ import './FlashCard.css';
 interface FlashCardProps {
   card: BirdCard;
   mode: 'audio-first' | 'image-first';
+  isAnswered: boolean;
+  currentAnswer: 'correct' | 'incorrect' | null;
+  onAnswer: (isCorrect: boolean) => void;
 }
 
-export const FlashCard: React.FC<FlashCardProps> = ({ card, mode }) => {
+export const FlashCard: React.FC<FlashCardProps> = ({
+  card,
+  mode,
+  isAnswered,
+  currentAnswer,
+  onAnswer
+}) => {
   const [isRevealed, setIsRevealed] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showAttribution, setShowAttribution] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [showChangeAnswer, setShowChangeAnswer] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const handlePlayPause = () => {
@@ -138,12 +148,54 @@ export const FlashCard: React.FC<FlashCardProps> = ({ card, mode }) => {
         </div>
 
         {!isRevealed && (
-          <button 
+          <button
             className="reveal-button"
             onClick={() => setIsRevealed(true)}
           >
             Reveal Name
           </button>
+        )}
+
+        {isRevealed && (
+          <div className="scoring-section">
+            {!isAnswered || showChangeAnswer ? (
+              <>
+                <p className="scoring-prompt">Did you get it correct?</p>
+                <div className="scoring-buttons">
+                  <button
+                    className="score-button correct"
+                    onClick={() => {
+                      onAnswer(true);
+                      setShowChangeAnswer(false);
+                    }}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    className="score-button incorrect"
+                    onClick={() => {
+                      onAnswer(false);
+                      setShowChangeAnswer(false);
+                    }}
+                  >
+                    No
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="answer-recorded">
+                <span className={`answer-status ${currentAnswer}`}>
+                  {currentAnswer === 'correct' ? 'Marked correct' : 'Marked incorrect'}
+                </span>
+                <button
+                  className="change-answer-button"
+                  onClick={() => setShowChangeAnswer(true)}
+                >
+                  Change answer
+                </button>
+              </div>
+            )}
+          </div>
         )}
 
         {isRevealed && (
