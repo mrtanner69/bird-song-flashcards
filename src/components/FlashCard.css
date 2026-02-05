@@ -262,15 +262,15 @@
   background: #c0392b;
 }
 
-/* Locked button state - the answer the user did NOT choose */
-.score-button.locked {
-  opacity: 0.4;
+/* Answered state - both buttons grey out after answering */
+.score-button.answered {
+  opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-.score-button.locked:hover {
-  transform: none;
+.score-button.answered.selected {
+  opacity: 0.7;
 }
 
 /* Mobile responsiveness */

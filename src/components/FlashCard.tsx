@@ -164,18 +164,18 @@ export const FlashCard: React.FC<FlashCardProps> = ({
             <p className="scoring-prompt">Did you get it correct?</p>
             <div className="scoring-buttons">
               <button
-                className={`score-button correct ${isAnswered && currentAnswer === 'correct' ? 'selected' : ''} ${isAnswered && currentAnswer !== 'correct' ? 'locked' : ''}`}
+                className={`score-button correct ${isAnswered && currentAnswer === 'correct' ? 'selected' : ''} ${isAnswered ? 'answered' : ''}`}
                 onClick={() => !isAnswered && onAnswer(true)}
-                disabled={isAnswered && currentAnswer !== 'correct'}
-                aria-disabled={isAnswered && currentAnswer !== 'correct'}
+                disabled={isAnswered}
+                aria-disabled={isAnswered}
               >
                 Yes
               </button>
               <button
-                className={`score-button incorrect ${isAnswered && currentAnswer === 'incorrect' ? 'selected' : ''} ${isAnswered && currentAnswer !== 'incorrect' ? 'locked' : ''}`}
+                className={`score-button incorrect ${isAnswered && currentAnswer === 'incorrect' ? 'selected' : ''} ${isAnswered ? 'answered' : ''}`}
                 onClick={() => !isAnswered && onAnswer(false)}
-                disabled={isAnswered && currentAnswer !== 'incorrect'}
-                aria-disabled={isAnswered && currentAnswer !== 'incorrect'}
+                disabled={isAnswered}
+                aria-disabled={isAnswered}
               >
                 No
               </button>
