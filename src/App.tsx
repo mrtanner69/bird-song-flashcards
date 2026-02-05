@@ -6,13 +6,36 @@ import { FlashCard } from "./components/FlashCard";
 import { DeckComplete } from "./components/DeckComplete";
 import { useScoring, type Mode } from "./hooks/useScoring";
 
+const MODE_STORAGE_KEY = "birdFlashcardsMode";
+
+function loadSavedMode(): Mode {
+  try {
+    const saved = localStorage.getItem(MODE_STORAGE_KEY);
+    if (saved === "audio-first" || saved === "image-first") {
+      return saved;
+    }
+  } catch {
+    // Ignore localStorage errors
+  }
+  return "image-first"; // Default to image-first
+}
+
+function saveModePreference(mode: Mode): void {
+  try {
+    localStorage.setItem(MODE_STORAGE_KEY, mode);
+  } catch {
+    // Ignore localStorage errors
+  }
+}
+
 export default function App() {
-  const [mode, setMode] = useState<Mode>("audio-first");
+  const [mode, setMode] = useState<Mode>(loadSavedMode);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showDeckComplete, setShowDeckComplete] = useState(false);
 
   const cards = useMemo(() => birds, []);
   const cardIds = useMemo(() => birds.map((b) => b.id), []);
+  const totalCards = cards.length;
 
   const {
     getCurrentScore,
@@ -76,6 +99,7 @@ export default function App() {
   const handleModeChange = useCallback(
     (newMode: Mode) => {
       setMode(newMode);
+      saveModePreference(newMode);
       switchMode(cardIds, newMode);
       setShowDeckComplete(false);
     },
@@ -95,27 +119,44 @@ export default function App() {
     }
   };
 
-  const formatPercent = (correct: number, attempts: number) => {
-    if (attempts === 0) return "0%";
-    return `${Math.round((correct / attempts) * 100)}%`;
+  const handleKeyDown = (e: React.KeyboardEvent, targetMode: Mode) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleModeChange(targetMode);
+    }
   };
 
   return (
     <div className="app">
       <div className="top-bar">
         <h1 className="app-title">Prescott Preserve Bird Flashcards</h1>
+        <p className="app-author">by Rob Tanner</p>
 
-        <div className="mode-toggle">
-          <label>
-            Mode:&nbsp;
-            <select
-              value={mode}
-              onChange={(e) => handleModeChange(e.target.value as Mode)}
-            >
-              <option value="audio-first">Audio first</option>
-              <option value="image-first">Image first</option>
-            </select>
-          </label>
+        <div
+          className="mode-toggle"
+          role="radiogroup"
+          aria-label="Quiz mode selection"
+        >
+          <button
+            role="radio"
+            aria-checked={mode === "image-first"}
+            className={`mode-option ${mode === "image-first" ? "active" : ""}`}
+            onClick={() => handleModeChange("image-first")}
+            onKeyDown={(e) => handleKeyDown(e, "image-first")}
+            tabIndex={mode === "image-first" ? 0 : -1}
+          >
+            Image first
+          </button>
+          <button
+            role="radio"
+            aria-checked={mode === "audio-first"}
+            className={`mode-option ${mode === "audio-first" ? "active" : ""}`}
+            onClick={() => handleModeChange("audio-first")}
+            onKeyDown={(e) => handleKeyDown(e, "audio-first")}
+            tabIndex={mode === "audio-first" ? 0 : -1}
+          >
+            Audio first
+          </button>
         </div>
       </div>
 
@@ -135,46 +176,30 @@ export default function App() {
             isAnswered={cardAnswered}
             currentAnswer={cardAnswer}
             onAnswer={handleAnswer}
+            onNext={handleNext}
+            isLastCard={deckIsComplete}
           />
         )}
       </div>
 
       {!showDeckComplete && (
-        <div className="navigation">
-          <div className="deck-progress">
-            Card {deckProgress.current} of {deckProgress.total}
-          </div>
-
-          {cardAnswered && (
-            <button className="nav-button primary" onClick={handleNext}>
-              {deckIsComplete ? "Finish Deck" : "Next"}
-            </button>
-          )}
+        <div className="deck-progress">
+          Card {deckProgress.current} of {deckProgress.total}
         </div>
       )}
 
       <div className="score-widget">
-        <div className="score-widget-main">
-          <span className="score-current">
-            {currentScore.correct}/{currentScore.attempts}
-            {currentScore.attempts > 0 && (
-              <span className="score-pct">
-                {formatPercent(currentScore.correct, currentScore.attempts)}
-              </span>
-            )}
-          </span>
-          {currentScore.currentStreak > 1 && (
-            <span className="score-streak">{currentScore.currentStreak} streak</span>
-          )}
-        </div>
         <div className="score-widget-bests">
-          <span className={`score-best ${mode === "audio-first" ? "active" : ""}`}>
-            Audio: {audioHighScore.bestCorrect}/{audioHighScore.bestAttempts}
-          </span>
           <span className={`score-best ${mode === "image-first" ? "active" : ""}`}>
-            Image: {imageHighScore.bestCorrect}/{imageHighScore.bestAttempts}
+            Best (Image): {imageHighScore.bestCorrect}/{totalCards}
+          </span>
+          <span className={`score-best ${mode === "audio-first" ? "active" : ""}`}>
+            Best (Audio): {audioHighScore.bestCorrect}/{totalCards}
           </span>
         </div>
+        {currentScore.currentStreak > 1 && (
+          <span className="score-streak">{currentScore.currentStreak} streak</span>
+        )}
         <div className="score-widget-controls">
           <button className="score-reset" onClick={handleResetCurrent}>
             Reset
