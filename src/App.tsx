@@ -247,7 +247,7 @@ export default function App() {
 
       <footer className="app-footer">
         <p>
-          Audio from Xeno-canto and images from Wikimedia. Check licenses in
+          Audio from Xeno-canto and images from Rob Tanner. Check license in
           attribution.
         </p>
       </footer>
