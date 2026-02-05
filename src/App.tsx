@@ -75,6 +75,11 @@ export default function App() {
   const deckProgress = getDeckProgress();
   const deckIsComplete = isDeckComplete();
 
+  // Game is in progress if user has answered at least one card
+  // Mode should be locked during active gameplay
+  const gameInProgress = currentScore.attempts > 0;
+  const isModeLocked = gameInProgress && !showDeckComplete;
+
   const handleNext = useCallback(() => {
     // Check if deck is complete after this card
     if (deckIsComplete) {
@@ -98,12 +103,15 @@ export default function App() {
 
   const handleModeChange = useCallback(
     (newMode: Mode) => {
+      // Don't allow mode change during active game
+      if (isModeLocked) return;
+
       setMode(newMode);
       saveModePreference(newMode);
       switchMode(cardIds, newMode);
       setShowDeckComplete(false);
     },
-    [switchMode, cardIds]
+    [switchMode, cardIds, isModeLocked]
   );
 
   const handleResetCurrent = () => {
@@ -120,6 +128,7 @@ export default function App() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent, targetMode: Mode) => {
+    if (isModeLocked) return;
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       handleModeChange(targetMode);
@@ -132,31 +141,46 @@ export default function App() {
         <h1 className="app-title">Prescott Preserve Bird Flashcards</h1>
         <p className="app-author">by Rob Tanner</p>
 
-        <div
-          className="mode-toggle"
-          role="radiogroup"
-          aria-label="Quiz mode selection"
-        >
-          <button
-            role="radio"
-            aria-checked={mode === "image-first"}
-            className={`mode-option ${mode === "image-first" ? "active" : ""}`}
-            onClick={() => handleModeChange("image-first")}
-            onKeyDown={(e) => handleKeyDown(e, "image-first")}
-            tabIndex={mode === "image-first" ? 0 : -1}
+        <div className="mode-toggle-container">
+          <div
+            className={`mode-toggle ${isModeLocked ? "locked" : ""}`}
+            role="radiogroup"
+            aria-label="Quiz mode selection"
+            aria-disabled={isModeLocked}
           >
-            Image first
-          </button>
-          <button
-            role="radio"
-            aria-checked={mode === "audio-first"}
-            className={`mode-option ${mode === "audio-first" ? "active" : ""}`}
-            onClick={() => handleModeChange("audio-first")}
-            onKeyDown={(e) => handleKeyDown(e, "audio-first")}
-            tabIndex={mode === "audio-first" ? 0 : -1}
-          >
-            Audio first
-          </button>
+            <button
+              role="radio"
+              aria-checked={mode === "image-first"}
+              className={`mode-option ${mode === "image-first" ? "active" : ""}`}
+              onClick={() => handleModeChange("image-first")}
+              onKeyDown={(e) => handleKeyDown(e, "image-first")}
+              tabIndex={isModeLocked ? -1 : mode === "image-first" ? 0 : -1}
+              disabled={isModeLocked}
+              aria-disabled={isModeLocked}
+            >
+              Image first
+            </button>
+            <button
+              role="radio"
+              aria-checked={mode === "audio-first"}
+              className={`mode-option ${mode === "audio-first" ? "active" : ""}`}
+              onClick={() => handleModeChange("audio-first")}
+              onKeyDown={(e) => handleKeyDown(e, "audio-first")}
+              tabIndex={isModeLocked ? -1 : mode === "audio-first" ? 0 : -1}
+              disabled={isModeLocked}
+              aria-disabled={isModeLocked}
+            >
+              Audio first
+            </button>
+            {isModeLocked && (
+              <span className="mode-lock-icon" aria-hidden="true">
+                🔒
+              </span>
+            )}
+          </div>
+          {isModeLocked && (
+            <p className="mode-lock-text">Locked during current game</p>
+          )}
         </div>
       </div>
 

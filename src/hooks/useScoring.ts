@@ -22,12 +22,18 @@ export interface DeckState {
   mode: Mode;              // Mode this deck is for
 }
 
+// Only high scores are persisted - game state is NOT persisted
+interface PersistedState {
+  audioFirstHighScore: HighScore;
+  imageFirstHighScore: HighScore;
+}
+
 export interface ScoringState {
   audioFirst: ModeScore;
   imageFirst: ModeScore;
   audioFirstHighScore: HighScore;
   imageFirstHighScore: HighScore;
-  deckState: DeckState | null; // Current deck session state
+  deckState: DeckState | null;
 }
 
 const STORAGE_KEY = 'birdFlashcardsScoring';
@@ -46,14 +52,6 @@ const defaultHighScore: HighScore = {
   bestStreak: 0,
 };
 
-const defaultState: ScoringState = {
-  audioFirst: { ...defaultModeScore },
-  imageFirst: { ...defaultModeScore },
-  audioFirstHighScore: { ...defaultHighScore },
-  imageFirstHighScore: { ...defaultHighScore },
-  deckState: null,
-};
-
 // Fisher-Yates shuffle algorithm
 function shuffleArray<T>(array: T[]): T[] {
   const shuffled = [...array];
@@ -64,31 +62,36 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
-function loadFromStorage(): ScoringState {
+// Only load HIGH SCORES from storage - game state always starts fresh
+function loadHighScoresFromStorage(): PersistedState {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored);
-      // Ensure all required fields exist (handle partial data from older versions)
       return {
-        audioFirst: { ...defaultModeScore, ...parsed.audioFirst },
-        imageFirst: { ...defaultModeScore, ...parsed.imageFirst },
         audioFirstHighScore: { ...defaultHighScore, ...parsed.audioFirstHighScore },
         imageFirstHighScore: { ...defaultHighScore, ...parsed.imageFirstHighScore },
-        deckState: parsed.deckState || null,
       };
     }
   } catch (e) {
-    console.error('Failed to load scoring from localStorage:', e);
+    console.error('Failed to load high scores from localStorage:', e);
   }
-  return { ...defaultState };
+  return {
+    audioFirstHighScore: { ...defaultHighScore },
+    imageFirstHighScore: { ...defaultHighScore },
+  };
 }
 
-function saveToStorage(state: ScoringState): void {
+// Only save HIGH SCORES to storage - game state is NOT persisted
+function saveHighScoresToStorage(state: ScoringState): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const toSave: PersistedState = {
+      audioFirstHighScore: state.audioFirstHighScore,
+      imageFirstHighScore: state.imageFirstHighScore,
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
   } catch (e) {
-    console.error('Failed to save scoring to localStorage:', e);
+    console.error('Failed to save high scores to localStorage:', e);
   }
 }
 
@@ -106,12 +109,22 @@ function calculatePercent(correct: number, attempts: number): number {
 }
 
 export function useScoring() {
-  const [state, setState] = useState<ScoringState>(loadFromStorage);
+  // Initialize state: load only high scores, start with fresh game state
+  const [state, setState] = useState<ScoringState>(() => {
+    const highScores = loadHighScoresFromStorage();
+    return {
+      audioFirst: { ...defaultModeScore },
+      imageFirst: { ...defaultModeScore },
+      audioFirstHighScore: highScores.audioFirstHighScore,
+      imageFirstHighScore: highScores.imageFirstHighScore,
+      deckState: null, // Always start with no deck - fresh game
+    };
+  });
 
-  // Save to localStorage whenever state changes
+  // Save only high scores to localStorage whenever they change
   useEffect(() => {
-    saveToStorage(state);
-  }, [state]);
+    saveHighScoresToStorage(state);
+  }, [state.audioFirstHighScore, state.imageFirstHighScore]);
 
   const getCurrentScore = useCallback((mode: Mode): ModeScore => {
     return state[getModeKey(mode)];
@@ -218,7 +231,13 @@ export function useScoring() {
   }, []);
 
   const resetAllScores = useCallback((): void => {
-    setState({ ...defaultState });
+    setState({
+      audioFirst: { ...defaultModeScore },
+      imageFirst: { ...defaultModeScore },
+      audioFirstHighScore: { ...defaultHighScore },
+      imageFirstHighScore: { ...defaultHighScore },
+      deckState: null,
+    });
   }, []);
 
   // Deck management functions
@@ -228,9 +247,9 @@ export function useScoring() {
 
   const initializeDeck = useCallback((cardIds: string[], mode: Mode): void => {
     setState((prev) => {
-      // Check if we already have a valid deck for this mode
+      // Check if we already have a valid deck for this mode (within the same session)
       if (prev.deckState && prev.deckState.mode === mode && prev.deckState.shuffledOrder.length > 0) {
-        // Restore existing deck session
+        // Keep existing deck session
         return prev;
       }
 
