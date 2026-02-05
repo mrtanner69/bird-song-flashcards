@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import type { BirdCard } from '../types/BirdCard';
 import './FlashCard.css';
 
@@ -23,24 +23,59 @@ export const FlashCard: React.FC<FlashCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [showAttribution, setShowAttribution] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [audioError, setAudioError] = useState(false);
+  const [audioLoading, setAudioLoading] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  // Preload audio when card mounts (helps with iOS)
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    setAudioError(false);
+    setAudioLoading(true);
+
+    const handleCanPlay = () => {
+      setAudioLoading(false);
+    };
+
+    const handleError = () => {
+      setAudioError(true);
+      setAudioLoading(false);
+    };
+
+    audio.addEventListener('canplaythrough', handleCanPlay);
+    audio.addEventListener('error', handleError);
+
+    // Explicitly load the audio (important for iOS)
+    audio.load();
+
+    return () => {
+      audio.removeEventListener('canplaythrough', handleCanPlay);
+      audio.removeEventListener('error', handleError);
+    };
+  }, [card.id]);
+
   const handlePlayPause = () => {
-    if (!audioRef.current) return;
+    if (!audioRef.current || audioError) return;
 
     if (isPlaying) {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current.play();
+      audioRef.current.play().catch(() => {
+        setAudioError(true);
+      });
       setIsPlaying(true);
     }
   };
 
   const handleReplay = () => {
-    if (!audioRef.current) return;
+    if (!audioRef.current || audioError) return;
     audioRef.current.currentTime = 0;
-    audioRef.current.play();
+    audioRef.current.play().catch(() => {
+      setAudioError(true);
+    });
     setIsPlaying(true);
   };
 
@@ -120,23 +155,31 @@ export const FlashCard: React.FC<FlashCardProps> = ({
         {mode === 'audio-first' ? renderAudioFirst() : renderImageFirst()}
 
         <div className="flashcard-controls">
-          <div className="audio-controls">
-            <button
-              className="audio-button"
-              onClick={handlePlayPause}
-              aria-label={isPlaying ? 'Pause' : 'Play'}
-            >
-              {isPlaying ? '⏸️ Pause' : '▶️ Play Song'}
-            </button>
+          {audioError ? (
+            <div className="audio-error">
+              ⚠️ Audio unavailable for this bird
+            </div>
+          ) : (
+            <div className="audio-controls">
+              <button
+                className="audio-button"
+                onClick={handlePlayPause}
+                aria-label={isPlaying ? 'Pause' : 'Play'}
+                disabled={audioLoading}
+              >
+                {audioLoading ? '⏳ Loading...' : isPlaying ? '⏸️ Pause' : '▶️ Play Song'}
+              </button>
 
-            <button
-              className="audio-button replay"
-              onClick={handleReplay}
-              aria-label="Replay"
-            >
-              🔁 Replay
-            </button>
-          </div>
+              <button
+                className="audio-button replay"
+                onClick={handleReplay}
+                aria-label="Replay"
+                disabled={audioLoading}
+              >
+                🔁 Replay
+              </button>
+            </div>
+          )}
 
           <audio
             ref={audioRef}
