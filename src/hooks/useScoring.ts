@@ -1,8 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 
-// Threshold for updating high scores - only update once attempts >= this value
-const HIGH_SCORE_THRESHOLD = 20;
-
 export type Mode = 'audio-first' | 'image-first';
 
 export interface ModeScore {
@@ -179,26 +176,22 @@ export function useScoring() {
         currentStreak: newStreak,
       };
 
-      // Check if we should update high score
+      // Update high score immediately (no minimum threshold)
       const currentHighScore = prev[highScoreKey];
       let newHighScore = { ...currentHighScore };
+      const newPercent = calculatePercent(newCorrect, newAttempts);
 
-      // Only update high score if we've reached the threshold
-      if (newAttempts >= HIGH_SCORE_THRESHOLD) {
-        const newPercent = calculatePercent(newCorrect, newAttempts);
-
-        // Update best percent (and associated correct/attempts) if better
-        if (newPercent > currentHighScore.bestPercent) {
-          newHighScore = {
-            ...newHighScore,
-            bestCorrect: newCorrect,
-            bestAttempts: newAttempts,
-            bestPercent: newPercent,
-          };
-        }
+      // Update best percent (and associated correct/attempts) if better
+      if (newPercent > currentHighScore.bestPercent) {
+        newHighScore = {
+          ...newHighScore,
+          bestCorrect: newCorrect,
+          bestAttempts: newAttempts,
+          bestPercent: newPercent,
+        };
       }
 
-      // Always update best streak if current streak is better
+      // Update best streak if current streak is better
       if (newStreak > currentHighScore.bestStreak) {
         newHighScore = {
           ...newHighScore,
@@ -342,7 +335,6 @@ export function useScoring() {
     recordAnswer,
     resetCurrentScore,
     resetAllScores,
-    HIGH_SCORE_THRESHOLD,
     // Deck management
     getDeckState,
     initializeDeck,

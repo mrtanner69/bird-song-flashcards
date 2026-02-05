@@ -22,7 +22,6 @@ export default function App() {
     recordAnswer,
     resetCurrentScore,
     resetAllScores,
-    HIGH_SCORE_THRESHOLD,
     // Deck management
     initializeDeck,
     advanceDeck,
@@ -120,77 +119,12 @@ export default function App() {
         </div>
       </div>
 
-      <div className="score-header">
-        <div className="score-display">
-          <div className="current-score">
-            <span className="score-label">Current:</span>
-            <span className="score-value">
-              {currentScore.correct} / {currentScore.attempts}
-              {currentScore.attempts > 0 && (
-                <span className="score-percent">
-                  ({formatPercent(currentScore.correct, currentScore.attempts)})
-                </span>
-              )}
-            </span>
-            {currentScore.currentStreak > 0 && (
-              <span className="streak">Streak: {currentScore.currentStreak}</span>
-            )}
-          </div>
-
-          <div className="high-scores">
-            <div className={`high-score ${mode === "audio-first" ? "active" : ""}`}>
-              <span className="score-label">Audio Best:</span>
-              <span className="score-value">
-                {audioHighScore.bestCorrect} / {audioHighScore.bestAttempts} ({audioHighScore.bestPercent}%)
-              </span>
-              {audioHighScore.bestStreak > 0 && (
-                <span className="best-streak">Best streak: {audioHighScore.bestStreak}</span>
-              )}
-            </div>
-            <div className={`high-score ${mode === "image-first" ? "active" : ""}`}>
-              <span className="score-label">Image Best:</span>
-              <span className="score-value">
-                {imageHighScore.bestCorrect} / {imageHighScore.bestAttempts} ({imageHighScore.bestPercent}%)
-              </span>
-              {imageHighScore.bestStreak > 0 && (
-                <span className="best-streak">Best streak: {imageHighScore.bestStreak}</span>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="score-info">
-          <small>High scores update after {HIGH_SCORE_THRESHOLD}+ attempts</small>
-        </div>
-
-        <div className="score-controls">
-          <button className="reset-button" onClick={handleResetCurrent}>
-            Reset current score
-          </button>
-          <button
-            className={`reset-button danger ${showResetConfirm ? "confirm" : ""}`}
-            onClick={handleResetAll}
-          >
-            {showResetConfirm ? "Confirm reset ALL?" : "Reset ALL scores"}
-          </button>
-          {showResetConfirm && (
-            <button
-              className="reset-button cancel"
-              onClick={() => setShowResetConfirm(false)}
-            >
-              Cancel
-            </button>
-          )}
-        </div>
-      </div>
-
       <div className="card-area">
         {showDeckComplete ? (
           <DeckComplete
             mode={mode}
             currentScore={currentScore}
             highScore={mode === "audio-first" ? audioHighScore : imageHighScore}
-            highScoreThreshold={HIGH_SCORE_THRESHOLD}
             onReshuffle={handleReshuffle}
           />
         ) : (
@@ -218,6 +152,52 @@ export default function App() {
           )}
         </div>
       )}
+
+      <div className="score-widget">
+        <div className="score-widget-main">
+          <span className="score-current">
+            {currentScore.correct}/{currentScore.attempts}
+            {currentScore.attempts > 0 && (
+              <span className="score-pct">
+                {formatPercent(currentScore.correct, currentScore.attempts)}
+              </span>
+            )}
+          </span>
+          {currentScore.currentStreak > 1 && (
+            <span className="score-streak">{currentScore.currentStreak} streak</span>
+          )}
+        </div>
+        <div className="score-widget-bests">
+          <span className={`score-best ${mode === "audio-first" ? "active" : ""}`}>
+            Audio: {audioHighScore.bestCorrect}/{audioHighScore.bestAttempts}
+          </span>
+          <span className={`score-best ${mode === "image-first" ? "active" : ""}`}>
+            Image: {imageHighScore.bestCorrect}/{imageHighScore.bestAttempts}
+          </span>
+        </div>
+        <div className="score-widget-controls">
+          <button className="score-reset" onClick={handleResetCurrent}>
+            Reset
+          </button>
+          {!showResetConfirm ? (
+            <button className="score-reset danger" onClick={handleResetAll}>
+              Reset all
+            </button>
+          ) : (
+            <>
+              <button className="score-reset confirm" onClick={handleResetAll}>
+                Confirm?
+              </button>
+              <button
+                className="score-reset"
+                onClick={() => setShowResetConfirm(false)}
+              >
+                Cancel
+              </button>
+            </>
+          )}
+        </div>
+      </div>
 
       <footer className="app-footer">
         <p>
