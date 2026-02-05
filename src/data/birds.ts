@@ -529,7 +529,7 @@ export const birds: BirdCard[] = [
     commonName: "Mallard",
     scientificName: "Anas platyrhynchos",
     speciesCode: "mallar",
-    imageUrl: "/images/mallar.JPG",
+    imageUrl: "/images/mallar.jpg",
     audioAttribution: "Richard E. Webster",
     imageAttribution: "Robin J Tanner",
     license: "CC0",
