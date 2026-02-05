@@ -158,7 +158,7 @@ export default function App() {
               disabled={isModeLocked}
               aria-disabled={isModeLocked}
             >
-              Image first
+              Picture plus song flashcards
             </button>
             <button
               role="radio"
@@ -170,7 +170,7 @@ export default function App() {
               disabled={isModeLocked}
               aria-disabled={isModeLocked}
             >
-              Audio first
+              Song only flashcards - hard!
             </button>
             {isModeLocked && (
               <span className="mode-lock-icon" aria-hidden="true">
