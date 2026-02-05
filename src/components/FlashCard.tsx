@@ -8,6 +8,8 @@ interface FlashCardProps {
   isAnswered: boolean;
   currentAnswer: 'correct' | 'incorrect' | null;
   onAnswer: (isCorrect: boolean) => void;
+  onNext: () => void;
+  isLastCard: boolean;
 }
 
 export const FlashCard: React.FC<FlashCardProps> = ({
@@ -15,7 +17,9 @@ export const FlashCard: React.FC<FlashCardProps> = ({
   mode,
   isAnswered,
   currentAnswer,
-  onAnswer
+  onAnswer,
+  onNext,
+  isLastCard
 }) => {
   const [isRevealed, setIsRevealed] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -75,8 +79,8 @@ export const FlashCard: React.FC<FlashCardProps> = ({
 
       {isRevealed && (
         <div className="flashcard-image">
-          <img 
-            src={getImageSrc()} 
+          <img
+            src={getImageSrc()}
             alt={card.commonName}
             onError={handleImageError}
           />
@@ -88,14 +92,14 @@ export const FlashCard: React.FC<FlashCardProps> = ({
   const renderImageFirst = () => (
     <>
       <div className="flashcard-image">
-        <img 
+        <img
           src={getImageSrc()}
-          alt={isRevealed ? card.commonName : 'Bird'} 
+          alt={isRevealed ? card.commonName : 'Bird'}
           className=""
           onError={handleImageError}
         />
       </div>
-      
+
       <div className="flashcard-question">
         {isRevealed ? (
           <>
@@ -175,19 +179,27 @@ export const FlashCard: React.FC<FlashCardProps> = ({
               >
                 No
               </button>
+              <button
+                className={`score-button next ${!isAnswered ? 'hidden' : ''}`}
+                onClick={onNext}
+                disabled={!isAnswered}
+                aria-hidden={!isAnswered}
+              >
+                {isLastCard ? 'Finish' : 'Next'}
+              </button>
             </div>
           </div>
         )}
 
         {isRevealed && (
           <div className="attribution-section">
-            <button 
+            <button
               className="attribution-toggle"
               onClick={() => setShowAttribution(!showAttribution)}
             >
               ⓘ Attribution {showAttribution ? '▼' : '▶'}
             </button>
-            
+
             {showAttribution && (
               <div className="attribution-details">
                 <div className="attribution-item">

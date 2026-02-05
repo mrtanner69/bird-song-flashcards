@@ -1,115 +1,133 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1.5rem;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Top Bar Styles */
+.top-bar {
+  margin-bottom: 1.5rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-title {
+  margin: 0 0 0.25rem 0;
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  color: #2c3e50;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.app-author {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  color: #95a5a6;
+  font-style: italic;
 }
 
-.card {
-  padding: 2em;
+/* Modern Mode Toggle - Segmented Control */
+.mode-toggle {
+  display: inline-flex;
+  background: #ecf0f1;
+  border-radius: 10px;
+  padding: 4px;
+  gap: 0;
 }
 
-.read-the-docs {
-  color: #888;
+.mode-option {
+  background: transparent;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #7f8c8d;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-/* Score Widget Styles - Subtle, integrated display */
+.mode-option:hover:not(.active) {
+  color: #2c3e50;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.mode-option.active {
+  background: white;
+  color: #2c3e50;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mode-option:focus-visible {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* Card Area */
+.card-area {
+  margin-bottom: 1rem;
+}
+
+/* Deck Progress */
+.deck-progress {
+  color: #7f8c8d;
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  font-weight: 500;
+  margin: 1rem 0;
+}
+
+/* Score Widget Styles - Enlarged ~50% */
 .score-widget {
   max-width: 600px;
-  margin: 1.5rem auto 0;
-  padding: 0.75rem 1rem;
+  margin: 1rem auto 0;
+  padding: 1rem 1.5rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem 1.5rem;
-  font-size: 0.85rem;
+  gap: 1rem 2rem;
+  font-size: clamp(1rem, 3vw, 1.25rem);
   color: #7f8c8d;
-}
-
-.score-widget-main {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.score-current {
-  font-weight: 600;
-  color: #2c3e50;
-  font-size: 0.95rem;
-}
-
-.score-pct {
-  margin-left: 0.25rem;
-  color: #95a5a6;
-  font-weight: 500;
-}
-
-.score-streak {
-  background: rgba(243, 156, 18, 0.15);
-  color: #d68910;
-  padding: 0.15rem 0.5rem;
-  border-radius: 10px;
-  font-size: 0.75rem;
-  font-weight: 600;
 }
 
 .score-widget-bests {
   display: flex;
-  gap: 0.75rem;
-  font-size: 0.8rem;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  justify-content: center;
+  font-size: clamp(1rem, 3vw, 1.2rem);
 }
 
 .score-best {
   color: #95a5a6;
   transition: color 0.2s;
+  font-weight: 500;
 }
 
 .score-best.active {
-  color: #5dade2;
-  font-weight: 500;
+  color: #3498db;
+  font-weight: 600;
+}
+
+.score-streak {
+  background: rgba(243, 156, 18, 0.15);
+  color: #d68910;
+  padding: 0.35rem 0.85rem;
+  border-radius: 12px;
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+  font-weight: 600;
 }
 
 .score-widget-controls {
   display: flex;
-  gap: 0.35rem;
+  gap: 0.5rem;
 }
 
 .score-reset {
   background: transparent;
   color: #bdc3c7;
   border: none;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -137,82 +155,53 @@
   background: #c0392b;
 }
 
-/* Navigation Styles */
-.navigation {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+/* Footer */
+.app-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ecf0f1;
+  color: #95a5a6;
+  font-size: 0.85rem;
 }
 
-.deck-progress {
-  color: #7f8c8d;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-.nav-button {
-  background: #3498db;
-  color: white;
-  border: none;
-  padding: 1rem 3rem;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-  min-width: 200px;
-}
-
-.nav-button:hover {
-  background: #2980b9;
-}
-
-.nav-button:active {
-  transform: scale(0.98);
-}
-
-.nav-button.primary {
-  background: #2ecc71;
-}
-
-.nav-button.primary:hover {
-  background: #27ae60;
+.app-footer p {
+  margin: 0;
 }
 
 /* Mobile responsiveness */
 @media (max-width: 480px) {
-  .score-widget {
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.5rem 0.75rem;
+  #root {
+    padding: 1rem;
   }
 
-  .score-widget-main {
-    justify-content: center;
+  .mode-toggle {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .mode-option {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .score-widget {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
   }
 
   .score-widget-bests {
-    gap: 1rem;
-    font-size: 0.75rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 1rem;
   }
 
   .score-widget-controls {
     margin-top: 0.25rem;
   }
 
-  .navigation {
-    margin-top: 1rem;
-  }
-
-  .nav-button {
-    width: 100%;
-    max-width: 300px;
-    padding: 0.85rem 2rem;
-    font-size: 1rem;
+  .deck-progress {
+    margin: 0.75rem 0;
   }
 }

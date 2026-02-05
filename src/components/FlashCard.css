@@ -8,19 +8,19 @@
 }
 
 .flashcard-content {
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 .flashcard-image {
   position: relative;
   width: 100%;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .flashcard-image img {
   width: 100%;
   height: auto;
-  max-height: 60vh;
+  max-height: 55vh;
   object-fit: contain;
   border-radius: 8px;
   transition: filter 0.3s;
@@ -36,14 +36,14 @@
 
 .flashcard-question {
   text-align: center;
-  margin-bottom: 1.5rem;
-  min-height: 80px;
+  margin-bottom: 1rem;
+  min-height: 60px;
 }
 
 .flashcard-question h2 {
   margin: 0 0 0.5rem 0;
   color: #2c3e50;
-  font-size: 1.75rem;
+  font-size: clamp(1.4rem, 4vw, 1.75rem);
 }
 
 .scientific-name {
@@ -53,7 +53,7 @@
 }
 
 .flashcard-controls {
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .audio-controls {
@@ -67,7 +67,7 @@
   background: #3498db;
   color: white;
   border: none;
-  padding: 1rem 1.5rem;
+  padding: 0.85rem 1rem;
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
@@ -113,9 +113,9 @@
 }
 
 .attribution-section {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   border-top: 1px solid #ecf0f1;
-  padding-top: 1rem;
+  padding-top: 0.75rem;
 }
 
 .attribution-toggle {
@@ -173,7 +173,7 @@
 
 /* Scoring Section Styles */
 .scoring-section {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   padding: 1rem;
   background: #f8f9fa;
   border-radius: 8px;
@@ -189,14 +189,16 @@
 
 .scoring-buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
   justify-content: center;
 }
 
 .score-button {
   flex: 1;
+  min-width: 80px;
   max-width: 120px;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1rem;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -210,7 +212,7 @@
   color: white;
 }
 
-.score-button.correct:hover {
+.score-button.correct:hover:not(:disabled) {
   background: #27ae60;
 }
 
@@ -219,8 +221,27 @@
   color: white;
 }
 
-.score-button.incorrect:hover {
+.score-button.incorrect:hover:not(:disabled) {
   background: #c0392b;
+}
+
+.score-button.next {
+  background: #3498db;
+  color: white;
+}
+
+.score-button.next:hover:not(:disabled) {
+  background: #2980b9;
+}
+
+.score-button.next.hidden {
+  visibility: hidden;
+  width: 0;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  flex: 0;
 }
 
 .score-button:active:not(:disabled) {
@@ -250,4 +271,39 @@
 
 .score-button.locked:hover {
   transform: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .flashcard-content {
+    padding: 1rem;
+  }
+
+  .flashcard-image img {
+    max-height: 45vh;
+  }
+
+  .flashcard-question {
+    min-height: 50px;
+    margin-bottom: 0.75rem;
+  }
+
+  .audio-button {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .scoring-section {
+    padding: 0.75rem;
+  }
+
+  .scoring-buttons {
+    gap: 0.5rem;
+  }
+
+  .score-button {
+    min-width: 70px;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.95rem;
+  }
 }
