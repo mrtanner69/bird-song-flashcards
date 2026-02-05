@@ -103,11 +103,6 @@ function getHighScoreKey(mode: Mode): 'audioFirstHighScore' | 'imageFirstHighSco
   return mode === 'audio-first' ? 'audioFirstHighScore' : 'imageFirstHighScore';
 }
 
-function calculatePercent(correct: number, attempts: number): number {
-  if (attempts === 0) return 0;
-  return Math.round((correct / attempts) * 100);
-}
-
 export function useScoring() {
   // Initialize state: load only high scores, start with fresh game state
   const [state, setState] = useState<ScoringState>(() => {
@@ -192,15 +187,13 @@ export function useScoring() {
       // Update high score immediately (no minimum threshold)
       const currentHighScore = prev[highScoreKey];
       let newHighScore = { ...currentHighScore };
-      const newPercent = calculatePercent(newCorrect, newAttempts);
 
-      // Update best percent (and associated correct/attempts) if better
-      if (newPercent > currentHighScore.bestPercent) {
+      // Update best correct count if better (track highest number correct)
+      if (newCorrect > currentHighScore.bestCorrect) {
         newHighScore = {
           ...newHighScore,
           bestCorrect: newCorrect,
           bestAttempts: newAttempts,
-          bestPercent: newPercent,
         };
       }
 

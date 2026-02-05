@@ -6,7 +6,6 @@ interface FlashCardProps {
   card: BirdCard;
   mode: 'audio-first' | 'image-first';
   isAnswered: boolean;
-  currentAnswer: 'correct' | 'incorrect' | null;
   onAnswer: (isCorrect: boolean) => void;
   onNext: () => void;
   isLastCard: boolean;
@@ -16,7 +15,6 @@ export const FlashCard: React.FC<FlashCardProps> = ({
   card,
   mode,
   isAnswered,
-  currentAnswer,
   onAnswer,
   onNext,
   isLastCard
@@ -161,33 +159,32 @@ export const FlashCard: React.FC<FlashCardProps> = ({
 
         {isRevealed && (
           <div className="scoring-section">
-            <p className="scoring-prompt">Did you get it correct?</p>
-            <div className="scoring-buttons">
+            {!isAnswered ? (
+              <>
+                <p className="scoring-prompt">Did you get it correct?</p>
+                <div className="scoring-buttons">
+                  <button
+                    className="score-button correct"
+                    onClick={() => onAnswer(true)}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    className="score-button incorrect"
+                    onClick={() => onAnswer(false)}
+                  >
+                    No
+                  </button>
+                </div>
+              </>
+            ) : (
               <button
-                className={`score-button correct ${isAnswered && currentAnswer === 'correct' ? 'selected' : ''} ${isAnswered && currentAnswer !== 'correct' ? 'locked' : ''}`}
-                onClick={() => !isAnswered && onAnswer(true)}
-                disabled={isAnswered && currentAnswer !== 'correct'}
-                aria-disabled={isAnswered && currentAnswer !== 'correct'}
-              >
-                Yes
-              </button>
-              <button
-                className={`score-button incorrect ${isAnswered && currentAnswer === 'incorrect' ? 'selected' : ''} ${isAnswered && currentAnswer !== 'incorrect' ? 'locked' : ''}`}
-                onClick={() => !isAnswered && onAnswer(false)}
-                disabled={isAnswered && currentAnswer !== 'incorrect'}
-                aria-disabled={isAnswered && currentAnswer !== 'incorrect'}
-              >
-                No
-              </button>
-              <button
-                className={`score-button next ${!isAnswered ? 'hidden' : ''}`}
+                className="score-button next"
                 onClick={onNext}
-                disabled={!isAnswered}
-                aria-hidden={!isAnswered}
               >
                 {isLastCard ? 'Finish' : 'Next'}
               </button>
-            </div>
+            )}
           </div>
         )}
 
