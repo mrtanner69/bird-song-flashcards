@@ -230,47 +230,12 @@
   color: white;
 }
 
-.score-button.next:hover:not(:disabled) {
+.score-button.next:hover {
   background: #2980b9;
 }
 
-.score-button.next.hidden {
-  visibility: hidden;
-  width: 0;
-  min-width: 0;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-  flex: 0;
-}
-
-.score-button:active:not(:disabled) {
+.score-button:active {
   transform: scale(0.98);
-}
-
-/* Selected button state - the answer the user chose */
-.score-button.selected {
-  cursor: default;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
-}
-
-.score-button.correct.selected {
-  background: #27ae60;
-}
-
-.score-button.incorrect.selected {
-  background: #c0392b;
-}
-
-/* Answered state - both buttons grey out after answering */
-.score-button.answered {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.score-button.answered.selected {
-  opacity: 0.7;
 }
 
 /* Mobile responsiveness */

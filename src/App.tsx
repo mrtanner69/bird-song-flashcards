@@ -41,7 +41,6 @@ export default function App() {
     getCurrentScore,
     getHighScore,
     isCardAnswered,
-    getCardAnswer,
     recordAnswer,
     resetCurrentScore,
     resetAllScores,
@@ -71,7 +70,6 @@ export default function App() {
   const audioHighScore = getHighScore("audio-first");
   const imageHighScore = getHighScore("image-first");
   const cardAnswered = isCardAnswered(mode, current.id);
-  const cardAnswer = getCardAnswer(mode, current.id);
   const deckProgress = getDeckProgress();
   const deckIsComplete = isDeckComplete();
 
@@ -198,7 +196,6 @@ export default function App() {
             card={current}
             mode={mode}
             isAnswered={cardAnswered}
-            currentAnswer={cardAnswer}
             onAnswer={handleAnswer}
             onNext={handleNext}
             isLastCard={deckIsComplete}
