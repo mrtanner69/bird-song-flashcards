@@ -159,10 +159,10 @@ export const FlashCard: React.FC<FlashCardProps> = ({
 
         {isRevealed && (
           <div className="scoring-section">
-            <p className="scoring-prompt">Did you get it correct?</p>
-            <div className="scoring-buttons">
-              {!isAnswered ? (
-                <>
+            {!isAnswered ? (
+              <>
+                <p className="scoring-prompt">Did you get it correct?</p>
+                <div className="scoring-buttons">
                   <button
                     className="score-button correct"
                     onClick={() => onAnswer(true)}
@@ -175,16 +175,16 @@ export const FlashCard: React.FC<FlashCardProps> = ({
                   >
                     No
                   </button>
-                </>
-              ) : (
-                <button
-                  className="score-button next"
-                  onClick={onNext}
-                >
-                  {isLastCard ? 'Finish' : 'Next'}
-                </button>
-              )}
-            </div>
+                </div>
+              </>
+            ) : (
+              <button
+                className="score-button next"
+                onClick={onNext}
+              >
+                {isLastCard ? 'Finish' : 'Next'}
+              </button>
+            )}
           </div>
         )}
 
