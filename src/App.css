@@ -41,147 +41,100 @@
   color: #888;
 }
 
-/* Score Header Styles */
-.score-header {
-  background: white;
-  border-radius: 12px;
-  padding: 1rem 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Score Widget Styles - Subtle, integrated display */
+.score-widget {
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.score-display {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.current-score {
+  margin: 1.5rem auto 0;
+  padding: 0.75rem 1rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid #ecf0f1;
-}
-
-.current-score .score-label {
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-.current-score .score-value {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #3498db;
-}
-
-.current-score .score-percent {
-  margin-left: 0.25rem;
-  color: #7f8c8d;
-  font-weight: 500;
-}
-
-.current-score .streak {
-  background: #f39c12;
-  color: white;
-  padding: 0.2rem 0.6rem;
-  border-radius: 12px;
+  justify-content: center;
+  gap: 0.75rem 1.5rem;
   font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.high-scores {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.high-score {
-  flex: 1;
-  min-width: 140px;
-  padding: 0.5rem;
-  border-radius: 8px;
-  background: #f8f9fa;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.high-score.active {
-  background: #e8f4fd;
-  border: 1px solid #3498db;
-}
-
-.high-score .score-label {
-  font-size: 0.8rem;
   color: #7f8c8d;
-  font-weight: 500;
 }
 
-.high-score .score-value {
+.score-widget-main {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.score-current {
   font-weight: 600;
   color: #2c3e50;
   font-size: 0.95rem;
 }
 
-.high-score .best-streak {
-  font-size: 0.75rem;
-  color: #f39c12;
+.score-pct {
+  margin-left: 0.25rem;
+  color: #95a5a6;
   font-weight: 500;
 }
 
-.score-info {
-  text-align: center;
-  margin-top: 0.5rem;
-  color: #95a5a6;
+.score-streak {
+  background: rgba(243, 156, 18, 0.15);
+  color: #d68910;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
   font-size: 0.75rem;
+  font-weight: 600;
 }
 
-.score-controls {
+.score-widget-bests {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
-  justify-content: center;
+  gap: 0.75rem;
+  font-size: 0.8rem;
 }
 
-.reset-button {
-  background: #ecf0f1;
-  color: #7f8c8d;
+.score-best {
+  color: #95a5a6;
+  transition: color 0.2s;
+}
+
+.score-best.active {
+  color: #5dade2;
+  font-weight: 500;
+}
+
+.score-widget-controls {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.score-reset {
+  background: transparent;
+  color: #bdc3c7;
   border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.reset-button:hover {
-  background: #bdc3c7;
-  color: #2c3e50;
+.score-reset:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #7f8c8d;
 }
 
-.reset-button.danger {
-  background: #fadbd8;
+.score-reset.danger {
+  color: #e8a7a7;
+}
+
+.score-reset.danger:hover {
+  background: rgba(231, 76, 60, 0.1);
   color: #c0392b;
 }
 
-.reset-button.danger:hover {
-  background: #f1948a;
-  color: white;
-}
-
-.reset-button.danger.confirm {
+.score-reset.confirm {
   background: #e74c3c;
   color: white;
 }
 
-.reset-button.cancel {
-  background: #d5dbdb;
+.score-reset.confirm:hover {
+  background: #c0392b;
 }
 
 /* Navigation Styles */
@@ -231,31 +184,25 @@
   background: #27ae60;
 }
 
-/* Mobile responsiveness for score header */
+/* Mobile responsiveness */
 @media (max-width: 480px) {
-  .score-header {
-    padding: 0.75rem 1rem;
-  }
-
-  .current-score .score-value {
-    font-size: 1rem;
-  }
-
-  .high-scores {
+  .score-widget {
     flex-direction: column;
     gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
   }
 
-  .high-score {
-    min-width: auto;
+  .score-widget-main {
+    justify-content: center;
   }
 
-  .score-controls {
-    flex-direction: column;
+  .score-widget-bests {
+    gap: 1rem;
+    font-size: 0.75rem;
   }
 
-  .reset-button {
-    width: 100%;
+  .score-widget-controls {
+    margin-top: 0.25rem;
   }
 
   .navigation {

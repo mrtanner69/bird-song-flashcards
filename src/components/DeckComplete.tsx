@@ -6,7 +6,6 @@ interface DeckCompleteProps {
   mode: Mode;
   currentScore: ModeScore;
   highScore: HighScore;
-  highScoreThreshold: number;
   onReshuffle: () => void;
 }
 
@@ -14,19 +13,18 @@ export const DeckComplete: React.FC<DeckCompleteProps> = ({
   mode,
   currentScore,
   highScore,
-  highScoreThreshold,
   onReshuffle,
 }) => {
   const { correct, attempts, currentStreak } = currentScore;
   const percent = attempts > 0 ? Math.round((correct / attempts) * 100) : 0;
 
-  // Check if this deck achieved a new high score
+  // Check if this deck achieved a new high score (no minimum threshold)
   // Since high scores are updated in real-time, we check if current score matches the high score
-  const qualifiesForHighScore = attempts >= highScoreThreshold;
-  const isNewBestPercent = qualifiesForHighScore &&
+  const isNewBestPercent =
     percent === highScore.bestPercent &&
     correct === highScore.bestCorrect &&
-    attempts === highScore.bestAttempts;
+    attempts === highScore.bestAttempts &&
+    attempts > 0;
   const isNewBestStreak = currentStreak === highScore.bestStreak && currentStreak > 0;
 
   const modeLabel = mode === 'audio-first' ? 'Audio-First' : 'Image-First';
@@ -77,12 +75,6 @@ export const DeckComplete: React.FC<DeckCompleteProps> = ({
               </div>
             )}
           </div>
-
-          {!qualifiesForHighScore && (
-            <p className="high-score-note">
-              Complete {highScoreThreshold}+ cards to qualify for high scores
-            </p>
-          )}
         </div>
 
         <button className="reshuffle-button" onClick={onReshuffle}>
