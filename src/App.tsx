@@ -282,12 +282,12 @@ export default function App() {
           <span className="score-streak">{currentScore.currentStreak} streak</span>
         )}
         <div className="score-widget-controls">
-          <button className="score-reset" onClick={handleResetCurrent}>
-            Reset
+          <button className="score-reset danger" onClick={handleResetCurrent}>
+            Reset current game
           </button>
           {!showResetConfirm ? (
             <button className="score-reset danger" onClick={handleResetAll}>
-              Reset all
+              Reset game and best scores
             </button>
           ) : (
             <>
