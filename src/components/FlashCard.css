@@ -69,32 +69,32 @@
   position: relative;
 }
 
-.bird-name-clickable {
-  cursor: pointer;
+.bird-name {
   margin: 0 0 0.5rem 0;
   color: #2c3e50;
   font-size: clamp(1.4rem, 4vw, 1.75rem);
 }
 
-.bird-name-clickable:hover .field-notes-icon {
+.field-notes-button {
+  display: inline-block;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.25rem;
+}
+
+.field-notes-button:hover {
   background: #2980b9;
 }
 
-.field-notes-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.1em;
-  height: 1.1em;
-  margin-left: 0.35em;
-  background: #3498db;
-  color: white;
-  border-radius: 50%;
-  font-size: 0.5em;
-  font-style: italic;
-  font-weight: 700;
-  vertical-align: middle;
-  transition: background 0.2s;
+.field-notes-button:active {
+  transform: scale(0.97);
 }
 
 .field-notes-popover {

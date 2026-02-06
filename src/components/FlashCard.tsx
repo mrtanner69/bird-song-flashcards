@@ -111,14 +111,18 @@ export const FlashCard: React.FC<FlashCardProps> = ({
 
   const renderBirdName = () => (
     <div className="bird-name-wrapper" ref={fieldNotesRef}>
-      <h2
-        className="bird-name-clickable"
-        onClick={() => card.fieldNotes && setShowFieldNotes(!showFieldNotes)}
-      >
+      <h2 className="bird-name">
         {card.commonName}
-        {card.fieldNotes && <span className="field-notes-icon">i</span>}
       </h2>
       <p className="scientific-name">{card.scientificName}</p>
+      {card.fieldNotes && (
+        <button
+          className="field-notes-button"
+          onClick={() => setShowFieldNotes(!showFieldNotes)}
+        >
+          Field Notes
+        </button>
+      )}
       {showFieldNotes && card.fieldNotes && (
         <div className="field-notes-popover">
           <p>{card.fieldNotes}</p>
