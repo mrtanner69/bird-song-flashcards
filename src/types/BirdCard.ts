@@ -3,6 +3,7 @@ export type BirdCard = {
   commonName: string;
   scientificName: string;
   speciesCode: string;
+  fieldNotes?: string;
 
   imageUrl: string;
 

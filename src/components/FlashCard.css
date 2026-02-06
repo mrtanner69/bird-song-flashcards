@@ -64,6 +64,74 @@
   margin: 0;
 }
 
+/* Bird name with field notes popover */
+.bird-name-wrapper {
+  position: relative;
+}
+
+.bird-name-clickable {
+  cursor: pointer;
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+  font-size: clamp(1.4rem, 4vw, 1.75rem);
+}
+
+.bird-name-clickable:hover .field-notes-icon {
+  background: #2980b9;
+}
+
+.field-notes-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1em;
+  height: 1.1em;
+  margin-left: 0.35em;
+  background: #3498db;
+  color: white;
+  border-radius: 50%;
+  font-size: 0.5em;
+  font-style: italic;
+  font-weight: 700;
+  vertical-align: middle;
+  transition: background 0.2s;
+}
+
+.field-notes-popover {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 100%;
+  z-index: 10;
+  width: min(90vw, 340px);
+  background: #fefefe;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 0.9rem 1rem;
+  text-align: left;
+  animation: popoverFadeIn 0.15s ease;
+}
+
+.field-notes-popover p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #34495e;
+  font-weight: 400;
+}
+
+@keyframes popoverFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
 .flashcard-controls {
   margin-bottom: 0.75rem;
 }

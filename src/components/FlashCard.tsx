@@ -22,10 +22,30 @@ export const FlashCard: React.FC<FlashCardProps> = ({
   const [isRevealed, setIsRevealed] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showAttribution, setShowAttribution] = useState(false);
+  const [showFieldNotes, setShowFieldNotes] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [audioError, setAudioError] = useState(false);
   const [audioLoading, setAudioLoading] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const fieldNotesRef = useRef<HTMLDivElement>(null);
+
+  // Close field notes when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (fieldNotesRef.current && !fieldNotesRef.current.contains(e.target as Node)) {
+        setShowFieldNotes(false);
+      }
+    };
+    if (showFieldNotes) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showFieldNotes]);
+
+  // Reset field notes when card changes
+  useEffect(() => {
+    setShowFieldNotes(false);
+  }, [card.id]);
 
   // Preload audio when card mounts (helps with iOS)
   useEffect(() => {
@@ -89,14 +109,29 @@ export const FlashCard: React.FC<FlashCardProps> = ({
     return `/images/${card.id}.jpg`;
   };
 
+  const renderBirdName = () => (
+    <div className="bird-name-wrapper" ref={fieldNotesRef}>
+      <h2
+        className="bird-name-clickable"
+        onClick={() => card.fieldNotes && setShowFieldNotes(!showFieldNotes)}
+      >
+        {card.commonName}
+        {card.fieldNotes && <span className="field-notes-icon">i</span>}
+      </h2>
+      <p className="scientific-name">{card.scientificName}</p>
+      {showFieldNotes && card.fieldNotes && (
+        <div className="field-notes-popover">
+          <p>{card.fieldNotes}</p>
+        </div>
+      )}
+    </div>
+  );
+
   const renderAudioFirst = () => (
     <>
       <div className="flashcard-question">
         {isRevealed ? (
-          <>
-            <h2>{card.commonName}</h2>
-            <p className="scientific-name">{card.scientificName}</p>
-          </>
+          renderBirdName()
         ) : (
           <>
             <h2>🎵 Listen and Identify</h2>
@@ -130,10 +165,7 @@ export const FlashCard: React.FC<FlashCardProps> = ({
 
       <div className="flashcard-question">
         {isRevealed ? (
-          <>
-            <h2>{card.commonName}</h2>
-            <p className="scientific-name">{card.scientificName}</p>
-          </>
+          renderBirdName()
         ) : (
           <>
             <h2>🖼️ Identify the Bird</h2>
