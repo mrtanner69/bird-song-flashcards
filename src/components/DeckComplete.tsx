@@ -7,6 +7,8 @@ interface DeckCompleteProps {
   currentScore: ModeScore;
   highScore: HighScore;
   onReshuffle: () => void;
+  onReviewMistakes: () => void;
+  incorrectCount: number;
 }
 
 export const DeckComplete: React.FC<DeckCompleteProps> = ({
@@ -14,6 +16,8 @@ export const DeckComplete: React.FC<DeckCompleteProps> = ({
   currentScore,
   highScore,
   onReshuffle,
+  onReviewMistakes,
+  incorrectCount,
 }) => {
   const { correct, attempts, currentStreak } = currentScore;
   const percent = attempts > 0 ? Math.round((correct / attempts) * 100) : 0;
@@ -77,9 +81,16 @@ export const DeckComplete: React.FC<DeckCompleteProps> = ({
           </div>
         </div>
 
-        <button className="reshuffle-button" onClick={onReshuffle}>
-          Reshuffle Deck
-        </button>
+        <div className="deck-complete-actions">
+          <button className="reshuffle-button" onClick={onReshuffle}>
+            Reshuffle Deck
+          </button>
+          {incorrectCount > 0 && (
+            <button className="review-mistakes-button" onClick={onReviewMistakes}>
+              Review Mistakes ({incorrectCount})
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

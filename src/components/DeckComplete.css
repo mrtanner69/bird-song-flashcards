@@ -122,6 +122,12 @@
   font-weight: 600;
 }
 
+.deck-complete-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .reshuffle-button {
   width: 100%;
   background: #2ecc71;
@@ -140,6 +146,27 @@
 }
 
 .reshuffle-button:active {
+  transform: scale(0.98);
+}
+
+.review-mistakes-button {
+  width: 100%;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.85rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.review-mistakes-button:hover {
+  background: #c0392b;
+}
+
+.review-mistakes-button:active {
   transform: scale(0.98);
 }
 

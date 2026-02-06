@@ -338,6 +338,43 @@ export function useScoring() {
     });
   }, []);
 
+  // Get list of incorrectly answered card IDs for current mode
+  const getIncorrectCardIds = useCallback((mode: Mode): string[] => {
+    const modeScore = state[getModeKey(mode)];
+    return Object.entries(modeScore.answeredCards)
+      .filter(([, answer]) => answer === 'incorrect')
+      .map(([cardId]) => cardId);
+  }, [state]);
+
+  // Start a review mistakes deck (only incorrect cards)
+  const startReviewMistakes = useCallback((mode: Mode): void => {
+    setState((prev) => {
+      const modeKey = getModeKey(mode);
+      const modeScore = prev[modeKey];
+
+      // Get only the incorrect card IDs
+      const incorrectIds = Object.entries(modeScore.answeredCards)
+        .filter(([, answer]) => answer === 'incorrect')
+        .map(([cardId]) => cardId);
+
+      if (incorrectIds.length === 0) return prev;
+
+      // Shuffle the incorrect cards
+      const shuffledOrder = shuffleArray(incorrectIds);
+
+      // Reset score but keep the high scores
+      return {
+        ...prev,
+        [modeKey]: { ...defaultModeScore },
+        deckState: {
+          shuffledOrder,
+          currentIndex: 0,
+          mode,
+        },
+      };
+    });
+  }, []);
+
   return {
     state,
     getCurrentScore,
@@ -356,5 +393,7 @@ export function useScoring() {
     getDeckProgress,
     reshuffleDeck,
     switchMode,
+    getIncorrectCardIds,
+    startReviewMistakes,
   };
 }

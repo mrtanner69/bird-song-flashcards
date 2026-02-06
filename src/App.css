@@ -96,14 +96,105 @@
 /* Card Area */
 .card-area {
   margin-bottom: 1rem;
+  transition: all 0.15s ease;
 }
 
-/* Deck Progress */
-.deck-progress {
+/* Answer flash feedback */
+.card-area.flash-correct {
+  animation: flashCorrect 0.4s ease;
+}
+
+.card-area.flash-incorrect {
+  animation: flashIncorrect 0.4s ease;
+}
+
+@keyframes flashCorrect {
+  0%, 100% { background: transparent; }
+  50% { background: rgba(46, 204, 113, 0.2); }
+}
+
+@keyframes flashIncorrect {
+  0%, 100% { background: transparent; }
+  50% { background: rgba(231, 76, 60, 0.2); }
+}
+
+/* Celebration overlay */
+.celebration-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.celebration-content {
+  background: white;
+  padding: 2rem 3rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: popIn 0.4s ease;
+}
+
+.celebration-emoji {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.celebration-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Progress Bar */
+.deck-progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem auto;
+  max-width: 400px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #ecf0f1;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
   color: #7f8c8d;
-  font-size: clamp(1rem, 3vw, 1.1rem);
+  font-size: 0.95rem;
   font-weight: 500;
-  margin: 1rem 0;
+  min-width: 60px;
 }
 
 /* Score Widget Styles - Enlarged ~50% */

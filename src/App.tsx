@@ -32,6 +32,8 @@ export default function App() {
   const [mode, setMode] = useState<Mode>(loadSavedMode);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showDeckComplete, setShowDeckComplete] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [cardKey, setCardKey] = useState(0); // For card transition animation
 
   const cards = useMemo(() => birds, []);
   const cardIds = useMemo(() => birds.map((b) => b.id), []);
@@ -52,6 +54,8 @@ export default function App() {
     getDeckProgress,
     reshuffleDeck,
     switchMode,
+    getIncorrectCardIds,
+    startReviewMistakes,
   } = useScoring();
 
   // Initialize deck on mount and when mode changes
@@ -81,23 +85,51 @@ export default function App() {
   const handleNext = useCallback(() => {
     // Check if deck is complete after this card
     if (deckIsComplete) {
+      // Check for perfect round celebration
+      if (currentScore.correct === currentScore.attempts && currentScore.attempts > 0) {
+        setShowCelebration(true);
+        setTimeout(() => setShowCelebration(false), 3000);
+      }
       setShowDeckComplete(true);
     } else {
       advanceDeck();
+      setCardKey((k) => k + 1); // Trigger card transition
     }
-  }, [advanceDeck, deckIsComplete]);
+  }, [advanceDeck, deckIsComplete, currentScore]);
+
+  const [lastAnswerCorrect, setLastAnswerCorrect] = useState<boolean | null>(null);
 
   const handleAnswer = useCallback(
     (isCorrect: boolean) => {
       recordAnswer(mode, current.id, isCorrect);
+      setLastAnswerCorrect(isCorrect);
+
+      // Celebrate on streak of 5+
+      const newStreak = isCorrect ? currentScore.currentStreak + 1 : 0;
+      if (newStreak >= 5 && newStreak % 5 === 0) {
+        setShowCelebration(true);
+        setTimeout(() => setShowCelebration(false), 2000);
+      }
+
+      // Clear feedback after a moment
+      setTimeout(() => setLastAnswerCorrect(null), 600);
     },
-    [mode, current.id, recordAnswer]
+    [mode, current.id, recordAnswer, currentScore.currentStreak]
   );
 
   const handleReshuffle = useCallback(() => {
     reshuffleDeck(cardIds, mode);
     setShowDeckComplete(false);
+    setCardKey((k) => k + 1);
   }, [reshuffleDeck, cardIds, mode]);
+
+  const handleReviewMistakes = useCallback(() => {
+    startReviewMistakes(mode);
+    setShowDeckComplete(false);
+    setCardKey((k) => k + 1);
+  }, [startReviewMistakes, mode]);
+
+  const incorrectCount = getIncorrectCardIds(mode).length;
 
   const handleModeChange = useCallback(
     (newMode: Mode) => {
@@ -182,17 +214,33 @@ export default function App() {
         </div>
       </div>
 
-      <div className="card-area">
+      {/* Celebration overlay */}
+      {showCelebration && (
+        <div className="celebration-overlay">
+          <div className="celebration-content">
+            <span className="celebration-emoji">🎉</span>
+            <span className="celebration-text">
+              {currentScore.correct === currentScore.attempts
+                ? "Perfect Round!"
+                : `${currentScore.currentStreak} Streak!`}
+            </span>
+          </div>
+        </div>
+      )}
+
+      <div className={`card-area ${lastAnswerCorrect !== null ? (lastAnswerCorrect ? 'flash-correct' : 'flash-incorrect') : ''}`}>
         {showDeckComplete ? (
           <DeckComplete
             mode={mode}
             currentScore={currentScore}
             highScore={mode === "audio-first" ? audioHighScore : imageHighScore}
             onReshuffle={handleReshuffle}
+            onReviewMistakes={handleReviewMistakes}
+            incorrectCount={incorrectCount}
           />
         ) : (
           <FlashCard
-            key={current.id}
+            key={`${current.id}-${cardKey}`}
             card={current}
             mode={mode}
             isAnswered={cardAnswered}
@@ -204,8 +252,16 @@ export default function App() {
       </div>
 
       {!showDeckComplete && (
-        <div className="deck-progress">
-          Card {deckProgress.current} of {deckProgress.total}
+        <div className="deck-progress-container">
+          <div className="progress-bar">
+            <div
+              className="progress-fill"
+              style={{ width: `${(deckProgress.current / deckProgress.total) * 100}%` }}
+            />
+          </div>
+          <span className="progress-text">
+            {deckProgress.current} / {deckProgress.total}
+          </span>
         </div>
       )}
 
