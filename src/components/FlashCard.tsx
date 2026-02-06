@@ -63,20 +63,15 @@ export const FlashCard: React.FC<FlashCardProps> = ({
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
+      // If audio has ended, restart from beginning
+      if (audioRef.current.ended) {
+        audioRef.current.currentTime = 0;
+      }
       audioRef.current.play().catch(() => {
         setAudioError(true);
       });
       setIsPlaying(true);
     }
-  };
-
-  const handleReplay = () => {
-    if (!audioRef.current || audioError) return;
-    audioRef.current.currentTime = 0;
-    audioRef.current.play().catch(() => {
-      setAudioError(true);
-    });
-    setIsPlaying(true);
   };
 
   const handleAudioEnded = () => {
@@ -160,25 +155,14 @@ export const FlashCard: React.FC<FlashCardProps> = ({
               ⚠️ Audio unavailable for this bird
             </div>
           ) : (
-            <div className="audio-controls">
-              <button
-                className="audio-button"
-                onClick={handlePlayPause}
-                aria-label={isPlaying ? 'Pause' : 'Play'}
-                disabled={audioLoading}
-              >
-                {audioLoading ? '⏳ Loading...' : isPlaying ? '⏸️ Pause' : '▶️ Play Song'}
-              </button>
-
-              <button
-                className="audio-button replay"
-                onClick={handleReplay}
-                aria-label="Replay"
-                disabled={audioLoading}
-              >
-                🔁 Replay
-              </button>
-            </div>
+            <button
+              className="audio-button"
+              onClick={handlePlayPause}
+              aria-label={isPlaying ? 'Pause' : 'Play'}
+              disabled={audioLoading}
+            >
+              {audioLoading ? '⏳ Loading...' : isPlaying ? '⏸️ Pause' : '▶️ Play Song'}
+            </button>
           )}
 
           <audio
