@@ -33,6 +33,7 @@ export default function App() {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showDeckComplete, setShowDeckComplete] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [showFireworks, setShowFireworks] = useState(false);
   const [cardKey, setCardKey] = useState(0); // For card transition animation
 
   const cards = useMemo(() => birds, []);
@@ -84,8 +85,13 @@ export default function App() {
   const handleNext = useCallback(() => {
     // Check if deck is complete after this card
     if (deckIsComplete) {
-      // Check for perfect round celebration
-      if (currentScore.correct === currentScore.attempts && currentScore.attempts > 0) {
+      // Check for perfect audio-only round - show big fireworks celebration
+      const isPerfect = currentScore.correct === currentScore.attempts && currentScore.attempts > 0;
+      if (isPerfect && mode === "audio-first") {
+        setShowFireworks(true);
+        setTimeout(() => setShowFireworks(false), 5000);
+      } else if (isPerfect) {
+        // Regular celebration for perfect image-first round
         setShowCelebration(true);
         setTimeout(() => setShowCelebration(false), 3000);
       }
@@ -94,7 +100,7 @@ export default function App() {
       advanceDeck();
       setCardKey((k) => k + 1); // Trigger card transition
     }
-  }, [advanceDeck, deckIsComplete, currentScore]);
+  }, [advanceDeck, deckIsComplete, currentScore, mode]);
 
   const [lastAnswerCorrect, setLastAnswerCorrect] = useState<boolean | null>(null);
 
@@ -228,6 +234,79 @@ export default function App() {
                 ? "Perfect Round!"
                 : `${currentScore.currentStreak} Streak!`}
             </span>
+          </div>
+        </div>
+      )}
+
+      {/* Fireworks celebration for 100% audio-only */}
+      {showFireworks && (
+        <div className="fireworks-overlay" onClick={() => setShowFireworks(false)}>
+          {/* Sparkle stars */}
+          <div className="sparkle" />
+          <div className="sparkle" />
+          <div className="sparkle" />
+          <div className="sparkle" />
+          <div className="sparkle" />
+          <div className="sparkle" />
+          <div className="sparkle" />
+          <div className="sparkle" />
+
+          {/* Firework bursts */}
+          <div className="firework-burst burst-1">
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+          </div>
+          <div className="firework-burst burst-2">
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+          </div>
+          <div className="firework-burst burst-3">
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+          </div>
+          <div className="firework-burst burst-4">
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+          </div>
+          <div className="firework-burst burst-5">
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+          </div>
+          <div className="firework-burst burst-6">
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+          </div>
+          <div className="firework-burst burst-7">
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+          </div>
+          <div className="firework-burst burst-8">
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+            <div className="particle" /><div className="particle" /><div className="particle" />
+          </div>
+
+          <div className="fireworks-content">
+            <span className="fireworks-emoji">🎆</span>
+            <h1 className="fireworks-title">100% PERFECT!</h1>
+            <p className="fireworks-subtitle">
+              You scored 100% on audio only - You are a true Prescott Birder!
+            </p>
           </div>
         </div>
       )}
