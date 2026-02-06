@@ -614,5 +614,59 @@ export const birds: BirdCard[] = [
       audioSourceUrl: "https://xeno-canto.org/495285",
       imageSourceUrl: ""
     }
+  },
+
+  {
+    id: "comrav",
+    commonName: "Common Raven",
+    scientificName: "Corvus corax",
+    speciesCode: "comrav",
+    imageUrl: "/images/placeholder.jpg",
+    audioAttribution: "Phoenix Birder",
+    imageAttribution: "Rob Tanner",
+    license: "CC0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    source: {
+      audio: "xeno-canto",
+      image: "user",
+      audioSourceUrl: "",
+      imageSourceUrl: ""
+    }
+  },
+
+  {
+    id: "mourdo",
+    commonName: "Mourning Dove",
+    scientificName: "Zenaida macroura",
+    speciesCode: "mourdo",
+    imageUrl: "/images/placeholder.jpg",
+    audioAttribution: "Paul Marvin",
+    imageAttribution: "Rob Tanner",
+    license: "CC0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    source: {
+      audio: "xeno-canto",
+      image: "user",
+      audioSourceUrl: "",
+      imageSourceUrl: ""
+    }
+  },
+
+  {
+    id: "snoegr",
+    commonName: "Snowy Egret",
+    scientificName: "Egretta thula",
+    speciesCode: "snoegr",
+    imageUrl: "/images/placeholder.jpg",
+    audioAttribution: "Paul Marvin",
+    imageAttribution: "Rob Tanner",
+    license: "CC0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    source: {
+      audio: "xeno-canto",
+      image: "user",
+      audioSourceUrl: "",
+      imageSourceUrl: ""
+    }
   }
 ];
