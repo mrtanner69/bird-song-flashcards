@@ -337,6 +337,71 @@
   transform: scale(0.98);
 }
 
+/* Image source popup */
+.image-source-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: overlayFadeIn 0.2s ease;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.image-source-modal {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  max-width: 90vw;
+  max-height: 90vh;
+  text-align: center;
+}
+
+.image-source-modal img {
+  max-width: 100%;
+  max-height: 75vh;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.image-source-modal p {
+  margin: 0.75rem 0 0;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.image-source-close {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.image-source-close:hover {
+  background: #e74c3c;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 480px) {
   .flashcard-content {
