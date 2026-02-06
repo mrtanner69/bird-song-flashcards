@@ -44,7 +44,6 @@ export default function App() {
     getHighScore,
     isCardAnswered,
     recordAnswer,
-    resetCurrentScore,
     resetAllScores,
     // Deck management
     initializeDeck,
@@ -144,18 +143,23 @@ export default function App() {
     [switchMode, cardIds, isModeLocked]
   );
 
-  const handleResetCurrent = () => {
-    resetCurrentScore(mode);
-  };
+  const handleResetCurrent = useCallback(() => {
+    reshuffleDeck(cardIds, mode);
+    setShowDeckComplete(false);
+    setCardKey((k) => k + 1);
+  }, [reshuffleDeck, cardIds, mode]);
 
-  const handleResetAll = () => {
+  const handleResetAll = useCallback(() => {
     if (showResetConfirm) {
       resetAllScores();
+      initializeDeck(cardIds, mode);
+      setShowDeckComplete(false);
       setShowResetConfirm(false);
+      setCardKey((k) => k + 1);
     } else {
       setShowResetConfirm(true);
     }
-  };
+  }, [showResetConfirm, resetAllScores, initializeDeck, cardIds, mode]);
 
   const handleKeyDown = (e: React.KeyboardEvent, targetMode: Mode) => {
     if (isModeLocked) return;
