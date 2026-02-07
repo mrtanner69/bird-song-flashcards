@@ -259,6 +259,32 @@
   text-decoration: underline;
 }
 
+.photographer-link {
+  color: #3498db;
+  cursor: pointer;
+}
+
+.photographer-link:hover {
+  text-decoration: underline;
+}
+
+.attribution-image-item {
+  position: relative;
+}
+
+.photographer-popup {
+  margin-top: 0.5rem;
+}
+
+.photographer-popup img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
 .attribution-item.source-info {
   margin-top: 0.5rem;
   padding-top: 0.5rem;

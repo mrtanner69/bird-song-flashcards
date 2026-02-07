@@ -23,6 +23,7 @@ export const FlashCard: React.FC<FlashCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [showAttribution, setShowAttribution] = useState(false);
   const [showFieldNotes, setShowFieldNotes] = useState(false);
+  const [showPhotographerPhoto, setShowPhotographerPhoto] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [audioError, setAudioError] = useState(false);
   const [audioLoading, setAudioLoading] = useState(true);
@@ -265,15 +266,24 @@ export const FlashCard: React.FC<FlashCardProps> = ({
                 <div className="attribution-item">
                   <strong>Audio:</strong> {card.audioAttribution}
                 </div>
-                <div className="attribution-item">
-                  <strong>Image:</strong> {card.imageAttribution}
-                  {card.source.imageSourceUrl && (
-                    <>
-                      <br />
-                      <a href={card.source.imageSourceUrl} target="_blank" rel="noopener noreferrer">
-                        View source
-                      </a>
-                    </>
+                <div className="attribution-item attribution-image-item">
+                  <strong>Image:</strong>{' '}
+                  {card.source.imageSourceUrl ? (
+                    <a href={card.source.imageSourceUrl} target="_blank" rel="noopener noreferrer">
+                      {card.imageAttribution}
+                    </a>
+                  ) : (
+                    <span
+                      className="photographer-link"
+                      onClick={() => setShowPhotographerPhoto(!showPhotographerPhoto)}
+                    >
+                      {card.imageAttribution}
+                    </span>
+                  )}
+                  {showPhotographerPhoto && !card.source.imageSourceUrl && (
+                    <div className="photographer-popup">
+                      <img src="/images/rob.jpg" alt={card.imageAttribution} />
+                    </div>
                   )}
                 </div>
                 <div className="attribution-item">
