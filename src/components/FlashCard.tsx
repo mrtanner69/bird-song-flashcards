@@ -264,17 +264,17 @@ export const FlashCard: React.FC<FlashCardProps> = ({
               <div className="attribution-details">
                 <div className="attribution-item">
                   <strong>Audio:</strong> {card.audioAttribution}
-                  <br />
-                  <a href={card.source.audioSourceUrl} target="_blank" rel="noopener noreferrer">
-                    View source
-                  </a>
                 </div>
                 <div className="attribution-item">
                   <strong>Image:</strong> {card.imageAttribution}
-                  <br />
-                  <a href={card.source.imageSourceUrl} target="_blank" rel="noopener noreferrer">
-                    View source
-                  </a>
+                  {card.source.imageSourceUrl && (
+                    <>
+                      <br />
+                      <a href={card.source.imageSourceUrl} target="_blank" rel="noopener noreferrer">
+                        View source
+                      </a>
+                    </>
+                  )}
                 </div>
                 <div className="attribution-item">
                   <strong>License:</strong>{' '}
