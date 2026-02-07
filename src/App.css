@@ -23,6 +23,30 @@
   font-style: italic;
 }
 
+.author-name {
+  position: relative;
+  cursor: pointer;
+}
+
+.author-thumbnail {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  margin-bottom: 4px;
+}
+
+.author-name:hover .author-thumbnail {
+  display: block;
+}
+
 /* Modern Mode Toggle - Segmented Control */
 .mode-toggle {
   display: inline-flex;

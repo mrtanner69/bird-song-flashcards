@@ -179,7 +179,11 @@ export default function App() {
     <div className="app">
       <div className="top-bar">
         <h1 className="app-title">Prescott Preserve Bird Flashcards</h1>
-        <p className="app-author">by Rob Tanner</p>
+        <p className="app-author">
+          by <span className="author-name">Rob Tanner
+            <img src="/images/rob.jpg" alt="Rob Tanner" className="author-thumbnail" />
+          </span>
+        </p>
 
         <div className="mode-toggle-container">
           <div
