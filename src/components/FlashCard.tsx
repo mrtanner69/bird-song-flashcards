@@ -23,6 +23,7 @@ export const FlashCard: React.FC<FlashCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [showAttribution, setShowAttribution] = useState(false);
   const [showFieldNotes, setShowFieldNotes] = useState(false);
+  const [showImageSource, setShowImageSource] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [audioError, setAudioError] = useState(false);
   const [audioLoading, setAudioLoading] = useState(true);
@@ -272,9 +273,21 @@ export const FlashCard: React.FC<FlashCardProps> = ({
                 <div className="attribution-item">
                   <strong>Image:</strong> {card.imageAttribution}
                   <br />
-                  <a href={card.source.imageSourceUrl} target="_blank" rel="noopener noreferrer">
-                    View source
-                  </a>
+                  {card.source.imageSourceUrl.startsWith('/images/') ? (
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setShowImageSource(true);
+                      }}
+                    >
+                      View source
+                    </a>
+                  ) : (
+                    <a href={card.source.imageSourceUrl} target="_blank" rel="noopener noreferrer">
+                      View source
+                    </a>
+                  )}
                 </div>
                 <div className="attribution-item">
                   <strong>License:</strong>{' '}
@@ -292,6 +305,18 @@ export const FlashCard: React.FC<FlashCardProps> = ({
           </div>
         )}
       </div>
+
+      {showImageSource && (
+        <div className="image-source-overlay" onClick={() => setShowImageSource(false)}>
+          <div className="image-source-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="image-source-close" onClick={() => setShowImageSource(false)}>
+              ✕
+            </button>
+            <img src={card.source.imageSourceUrl} alt={card.imageAttribution} />
+            <p>{card.imageAttribution}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
