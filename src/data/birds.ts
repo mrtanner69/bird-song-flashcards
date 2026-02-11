@@ -705,5 +705,139 @@ export const birds: BirdCard[] = [
       audioSourceUrl: "",
       imageSourceUrl: ""
     }
+  },
+
+  {
+    id: "redhea",
+    commonName: "Redhead",
+    scientificName: "Aythya americana",
+    speciesCode: "redhea",
+    fieldNotes: "A medium-sized diving duck. Males have a smooth, rounded cinnamon-red head, black breast, and gray body. Females are plain brown with a subtler face pattern than similar species. Winters on desert lakes and reservoirs across the Southwest, often mixed in with Canvasbacks and scaup.",
+    imageUrl: "/images/placeholder.jpg",
+    audioAttribution: "Andrew Spencer",
+    imageAttribution: "Robin J Tanner",
+    license: "CC0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    source: {
+      audio: "xeno-canto",
+      image: "user",
+      audioSourceUrl: "",
+      imageSourceUrl: ""
+    }
+  },
+
+  {
+    id: "amewig",
+    commonName: "American Wigeon",
+    scientificName: "Mareca americana",
+    speciesCode: "amewig",
+    fieldNotes: "A compact dabbling duck. Males have a green eye stripe and bold white forehead patch, earning the nickname \"baldpate.\" Often grazes on shore and steals aquatic vegetation from diving ducks. A common winter visitor to ponds and marshes throughout the Southwest.",
+    imageUrl: "/images/placeholder.jpg",
+    audioAttribution: "Andrew Spencer",
+    imageAttribution: "Robin J Tanner",
+    license: "CC0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    source: {
+      audio: "xeno-canto",
+      image: "user",
+      audioSourceUrl: "",
+      imageSourceUrl: ""
+    }
+  },
+
+  {
+    id: "cintea",
+    commonName: "Cinnamon Teal",
+    scientificName: "Spatula cyanoptera",
+    speciesCode: "cintea",
+    fieldNotes: "A small dabbling duck of western marshes. Males are unmistakable, entirely rich cinnamon-red with red eyes. Females are mottled brown, nearly identical to female Blue-winged Teal. Breeds in shallow wetlands across the arid West and is one of the few ducks restricted to the Western Hemisphere.",
+    imageUrl: "/images/placeholder.jpg",
+    audioAttribution: "Andrew Spencer",
+    imageAttribution: "Robin J Tanner",
+    license: "CC0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    source: {
+      audio: "xeno-canto",
+      image: "user",
+      audioSourceUrl: "",
+      imageSourceUrl: ""
+    }
+  },
+
+  {
+    id: "rinduc",
+    commonName: "Ring-necked Duck",
+    scientificName: "Aythya collaris",
+    speciesCode: "rinduc",
+    fieldNotes: "A medium-sized diving duck misnamed for its hard-to-see chestnut neck ring. Look instead for the bold white ring on the bill. Males are dark-backed with gray sides; females are brown with a pale eye ring. Winters on ponds and lakes throughout the Southwest.",
+    imageUrl: "/images/placeholder.jpg",
+    audioAttribution: "Andrew Spencer",
+    imageAttribution: "Robin J Tanner",
+    license: "CC0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    source: {
+      audio: "xeno-canto",
+      image: "user",
+      audioSourceUrl: "",
+      imageSourceUrl: ""
+    }
+  },
+
+  {
+    id: "canbac",
+    commonName: "Canvasback",
+    scientificName: "Aythya valisineria",
+    speciesCode: "canbac",
+    fieldNotes: "The largest North American diving duck, with a distinctive sloping forehead and long bill that give it an elegant profile. Males have a rich chestnut head, black breast, and pale whitish body. A very quiet bird that rarely vocalizes. Winters on large desert lakes and reservoirs in the Southwest.",
+    audioNote: "No song file — very quiet bird",
+    imageUrl: "/images/placeholder.jpg",
+    audioAttribution: "N/A",
+    imageAttribution: "Robin J Tanner",
+    license: "CC0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    source: {
+      audio: "other",
+      image: "user",
+      audioSourceUrl: "",
+      imageSourceUrl: ""
+    }
+  },
+
+  {
+    id: "pibgre",
+    commonName: "Pied-billed Grebe",
+    scientificName: "Podilymbus podiceps",
+    speciesCode: "pibgre",
+    fieldNotes: "A small, stocky waterbird that can sink slowly below the surface like a submarine. Breeding birds show a bold black ring on the pale bill. Secretive but surprisingly vocal, giving a loud, far-carrying series of whooping calls. Found year-round on ponds and marshes across the Southwest.",
+    imageUrl: "/images/placeholder.jpg",
+    audioAttribution: "Andrew Spencer",
+    imageAttribution: "Robin J Tanner",
+    license: "CC0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    source: {
+      audio: "xeno-canto",
+      image: "user",
+      audioSourceUrl: "",
+      imageSourceUrl: ""
+    }
+  },
+
+  {
+    id: "rudduc",
+    commonName: "Ruddy Duck",
+    scientificName: "Oxyura jamaicensis",
+    speciesCode: "rudduc",
+    fieldNotes: "A small, compact diving duck with a stiff tail often cocked upright. Breeding males are bright chestnut with a sky-blue bill and bold white cheek patch. In courtship, males beat their bill against an inflated neck, creating bubbles. Common on Southwest lakes and reservoirs in winter.",
+    imageUrl: "/images/placeholder.jpg",
+    audioAttribution: "Andrew Spencer",
+    imageAttribution: "Robin J Tanner",
+    license: "CC0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    source: {
+      audio: "xeno-canto",
+      image: "user",
+      audioSourceUrl: "",
+      imageSourceUrl: ""
+    }
   }
 ];

@@ -189,7 +189,7 @@ export const FlashCard: React.FC<FlashCardProps> = ({
         <div className="flashcard-controls">
           {audioError ? (
             <div className="audio-error">
-              ⚠️ Audio unavailable for this bird
+              ⚠️ {card.audioNote || 'Audio unavailable for this bird'}
             </div>
           ) : (
             <button
