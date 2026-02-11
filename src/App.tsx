@@ -1,10 +1,12 @@
-import { useMemo, useState, useCallback, useEffect } from "react";
+import { useMemo, useState, useCallback, useEffect, useRef } from "react";
 import "./App.css";
 
 import { birds } from "./data/birds";
 import { FlashCard } from "./components/FlashCard";
 import { DeckComplete } from "./components/DeckComplete";
+import { BirdTypeFilter } from "./components/BirdTypeFilter";
 import { useScoring, type Mode } from "./hooks/useScoring";
+import { ALL_BIRD_TYPES, type BirdType } from "./types/BirdCard";
 
 const MODE_STORAGE_KEY = "birdFlashcardsMode";
 
@@ -44,14 +46,20 @@ export default function App() {
   const [showCelebration, setShowCelebration] = useState(false);
   const [showFireworks, setShowFireworks] = useState(false);
   const [cardKey, setCardKey] = useState(0); // For card transition animation
+  const [selectedBirdTypes, setSelectedBirdTypes] = useState<Set<BirdType>>(
+    () => new Set(ALL_BIRD_TYPES)
+  );
 
   // Sync data-theme attribute with darkMode state
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
   }, [darkMode]);
 
-  const cards = useMemo(() => birds, []);
-  const cardIds = useMemo(() => birds.map((b) => b.id), []);
+  const cards = useMemo(
+    () => birds.filter((b) => selectedBirdTypes.has(b.birdType)),
+    [selectedBirdTypes]
+  );
+  const cardIds = useMemo(() => cards.map((b) => b.id), [cards]);
   const totalCards = cards.length;
 
   const {
@@ -92,9 +100,20 @@ export default function App() {
   const deckIsComplete = isDeckComplete();
 
   // Game is in progress if user has answered at least one card
-  // Mode should be locked during active gameplay
+  // Mode and filter should be locked during active gameplay
   const gameInProgress = currentScore.attempts > 0;
   const isModeLocked = gameInProgress && !showDeckComplete;
+
+  // Track previous cardIds to reinitialize deck when filter changes
+  const prevCardIdsRef = useRef(cardIds);
+  useEffect(() => {
+    if (prevCardIdsRef.current !== cardIds && cardIds.length > 0) {
+      prevCardIdsRef.current = cardIds;
+      reshuffleDeck(cardIds, mode);
+      setShowDeckComplete(false);
+      setCardKey((k) => k + 1);
+    }
+  }, [cardIds, mode, reshuffleDeck]);
 
   const handleNext = useCallback(() => {
     // Check if deck is complete after this card
@@ -181,6 +200,29 @@ export default function App() {
     }
   }, [showResetConfirm, resetAllScores, initializeDeck, cardIds, mode]);
 
+  const handleToggleBirdType = useCallback(
+    (type: BirdType) => {
+      if (isModeLocked) return;
+      setSelectedBirdTypes((prev) => {
+        const next = new Set(prev);
+        if (next.has(type)) {
+          // Don't allow deselecting the last type
+          if (next.size <= 1) return prev;
+          next.delete(type);
+        } else {
+          next.add(type);
+        }
+        return next;
+      });
+    },
+    [isModeLocked]
+  );
+
+  const handleSelectAllTypes = useCallback(() => {
+    if (isModeLocked) return;
+    setSelectedBirdTypes(new Set(ALL_BIRD_TYPES));
+  }, [isModeLocked]);
+
   const handleKeyDown = (e: React.KeyboardEvent, targetMode: Mode) => {
     if (isModeLocked) return;
     if (e.key === "Enter" || e.key === " ") {
@@ -264,6 +306,13 @@ export default function App() {
             <p className="mode-lock-text">Locked during current game</p>
           )}
         </div>
+
+        <BirdTypeFilter
+          selectedTypes={selectedBirdTypes}
+          onToggleType={handleToggleBirdType}
+          onSelectAll={handleSelectAllTypes}
+          disabled={isModeLocked}
+        />
       </div>
 
       {/* Celebration overlay */}
