@@ -3,23 +3,131 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Theme colors — Light (default) */
+  --bg-page: #ffffff;
+  --bg-card: #ffffff;
+  --bg-section: #f8f9fa;
+  --bg-toggle: #ecf0f1;
+  --bg-progress: #ecf0f1;
+  --bg-error: #f8d7da;
+  --bg-image: #111;
+
+  --text-primary: #2c3e50;
+  --text-secondary: #7f8c8d;
+  --text-muted: #95a5a6;
+  --text-dark: #34495e;
+  --text-error: #721c24;
+
+  --border-light: #ecf0f1;
+  --border-medium: #ddd;
+  --border-divider: #e0e0e0;
+
+  --link-color: #3498db;
+  --link-hover: #2980b9;
+  --focus-ring: #3498db;
+
+  --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-popup: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --shadow-thumb: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-overlay: 0 10px 40px rgba(0, 0, 0, 0.2);
+
+  --overlay-bg: rgba(0, 0, 0, 0.3);
+  --celebration-bg: #ffffff;
+
+  --mode-option-hover-bg: rgba(255, 255, 255, 0.5);
+  --mode-option-active-bg: #ffffff;
+  --mode-option-active-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  --streak-bg: rgba(243, 156, 18, 0.15);
+  --streak-text: #d68910;
+
+  --score-reset-text: #bdc3c7;
+  --score-reset-hover-bg: rgba(0, 0, 0, 0.05);
+  --score-reset-hover-text: #7f8c8d;
+  --score-reset-danger-text: #e8a7a7;
+  --score-reset-danger-hover-bg: rgba(231, 76, 60, 0.1);
+  --score-reset-danger-hover-text: #c0392b;
+
+  --btn-bg: #f9f9f9;
+
+  --flash-correct-bg: rgba(46, 204, 113, 0.2);
+  --flash-incorrect-bg: rgba(231, 76, 60, 0.2);
+
+  --high-score-item-bg: #ffffff;
+
+  color: var(--text-primary);
+  background-color: var(--bg-page);
+}
+
+/* Dark theme overrides */
+[data-theme="dark"] {
+  --bg-page: #1a1b2e;
+  --bg-card: #252640;
+  --bg-section: #2d2e48;
+  --bg-toggle: #2d2e48;
+  --bg-progress: #2d2e48;
+  --bg-error: #3d1f1f;
+  --bg-image: #111;
+
+  --text-primary: #e2e4f0;
+  --text-secondary: #9a9cb8;
+  --text-muted: #7e80a0;
+  --text-dark: #c8cae0;
+  --text-error: #f0b0b0;
+
+  --border-light: #3a3b58;
+  --border-medium: #4a4b68;
+  --border-divider: #3a3b58;
+
+  --link-color: #5dade2;
+  --link-hover: #85c1e9;
+  --focus-ring: #5dade2;
+
+  --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-popup: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-thumb: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-overlay: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+  --overlay-bg: rgba(0, 0, 0, 0.5);
+  --celebration-bg: #252640;
+
+  --mode-option-hover-bg: rgba(255, 255, 255, 0.08);
+  --mode-option-active-bg: #3a3b58;
+  --mode-option-active-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  --streak-bg: rgba(243, 156, 18, 0.25);
+  --streak-text: #f5b041;
+
+  --score-reset-text: #5a5b78;
+  --score-reset-hover-bg: rgba(255, 255, 255, 0.08);
+  --score-reset-hover-text: #9a9cb8;
+  --score-reset-danger-text: #c07070;
+  --score-reset-danger-hover-bg: rgba(231, 76, 60, 0.15);
+  --score-reset-danger-hover-text: #e74c3c;
+
+  --btn-bg: #2d2e48;
+
+  --flash-correct-bg: rgba(46, 204, 113, 0.15);
+  --flash-incorrect-bg: rgba(231, 76, 60, 0.15);
+
+  --high-score-item-bg: #353658;
+
+  color: var(--text-primary);
+  background-color: var(--bg-page);
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--link-color);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--link-hover);
 }
 
 body {
@@ -42,27 +150,15 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--btn-bg);
+  color: var(--text-primary);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--link-color);
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }

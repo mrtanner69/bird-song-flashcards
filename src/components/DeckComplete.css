@@ -1,9 +1,9 @@
 .deck-complete {
   max-width: 600px;
   margin: 0 auto;
-  background: white;
+  background: var(--bg-card);
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-card);
   overflow: hidden;
 }
 
@@ -18,12 +18,12 @@
 
 .deck-complete-header h2 {
   margin: 0 0 0.5rem 0;
-  color: #2c3e50;
+  color: var(--text-primary);
   font-size: 2rem;
 }
 
 .deck-complete-header .mode-label {
-  color: #7f8c8d;
+  color: var(--text-secondary);
   font-size: 1rem;
   margin: 0;
 }
@@ -65,7 +65,7 @@
 }
 
 .high-score-section {
-  background: #f8f9fa;
+  background: var(--bg-section);
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
@@ -73,7 +73,7 @@
 
 .high-score-section h3 {
   margin: 0 0 1rem 0;
-  color: #2c3e50;
+  color: var(--text-primary);
   font-size: 1.1rem;
 }
 
@@ -108,17 +108,17 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
-  background: white;
+  background: var(--high-score-item-bg);
   border-radius: 8px;
 }
 
 .high-score-item .label {
-  color: #7f8c8d;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .high-score-item .value {
-  color: #2c3e50;
+  color: var(--text-primary);
   font-weight: 600;
 }
 
