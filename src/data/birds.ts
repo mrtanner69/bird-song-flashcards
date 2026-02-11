@@ -789,7 +789,7 @@ export const birds: BirdCard[] = [
     scientificName: "Aythya valisineria",
     speciesCode: "canbac",
     fieldNotes: "The largest North American diving duck, with a distinctive sloping forehead and long bill that give it an elegant profile. Males have a rich chestnut head, black breast, and pale whitish body. A very quiet bird that rarely vocalizes. Winters on large desert lakes and reservoirs in the Southwest.",
-    audioNote: "No song file — very quiet bird",
+    audioNote: "Quiet bird, no song file",
     imageUrl: "/images/placeholder.jpg",
     audioAttribution: "N/A",
     imageAttribution: "Robin J Tanner",
