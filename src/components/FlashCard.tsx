@@ -53,6 +53,13 @@ export const FlashCard: React.FC<FlashCardProps> = ({
     const audio = audioRef.current;
     if (!audio) return;
 
+    // If the bird has an audioNote (e.g. no song file), skip loading
+    if (card.audioNote) {
+      setAudioError(true);
+      setAudioLoading(false);
+      return;
+    }
+
     setAudioError(false);
     setAudioLoading(true);
 
@@ -189,7 +196,7 @@ export const FlashCard: React.FC<FlashCardProps> = ({
         <div className="flashcard-controls">
           {audioError ? (
             <div className="audio-error">
-              ⚠️ Audio unavailable for this bird
+              ⚠️ {card.audioNote || 'Audio unavailable for this bird'}
             </div>
           ) : (
             <button
